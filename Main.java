@@ -4,9 +4,11 @@ import java.sql.SQLException;
 import java.io.*;
 import java.lang.*;
 import java.util.Scanner; // class for user input
+import java.util.Set;
 
 
 public class Main {
+    private static Scanner input_scanner = new Scanner(System.in);    
     public static void main(String[] args)
     {
         String dbAddress = "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/db075";
@@ -30,8 +32,7 @@ public class Main {
                 System.out.println("SQLException: " + ex.getMessage());
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
-            }
-        Scanner input_scanner = new Scanner(System.in);    
+            }  
         
         Boolean program_end = false;
 
@@ -45,11 +46,13 @@ public class Main {
             System.out.println("4. Exit this program");
             System.out.println("Enter Yours Choice: ");
             String operation = input_scanner.nextLine();
-            while ((operation != "1") || (operation != "2") || (operation != "3") || (operation != "4")){
-                System.out.println("invalid operation id! Please input again.");
-                System.out.println("Enter Yours Choice: ");
-                operation = input_scanner.nextLine();
-            } 
+
+            Set<String> ops = Set.of("1","2","3","4");
+            while (! ops.contains(operation)){
+            System.out.println("invalid operation id! Please input again.");
+            System.out.println("Enter Yours Choice: ");
+            operation = input_scanner.nextLine();
+        } 
             switch (operation) {
                 case "1":
                     // Admin operation
@@ -60,14 +63,14 @@ public class Main {
                 case "4":
                     // exit this program
                     program_end = true;
-                    break;
                 default:
                     // if none of the above matches
             }
+            input_scanner.close(); // close input scanner at the end of program
         }
         
 
-        input_scanner.close(); // close input scanner at the end of program
+        System.out.println("Thank you for using our Car Renting System!\nGood bye.");
     } 
     
 }

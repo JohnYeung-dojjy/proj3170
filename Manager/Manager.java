@@ -1,3 +1,4 @@
+package Manager;
 import java.sql.Connection;
 
 import java.util.Scanner; // class for user input
@@ -11,12 +12,13 @@ public class Manager {
     private Set<String> ops = Set.of("1","2","3","4");
     private Connection con;
     private Scanner input_scanner = new Scanner(System.in);  
+    private String operation;
     public Manager(Connection connection){
         con = connection;
     }
-    public void operation(Scanner input_scanner){
+    public void operation(){
         this.DisplayMenu();
-        String operation = this.input_scanner.nextLine();
+        operation = this.input_scanner.nextLine();
         
         while (! this.ops.contains(operation)){
             System.out.println("invalid operation id! Please input again.");
@@ -25,14 +27,14 @@ public class Manager {
         } 
         switch (operation) {
             case "1":
-                // Create all tables
+                // Rent a Car Copy
                 this.RentCarCopy();
             case "2":
-                // Delete all tables
+                // Return a Car
                 this.ReturnCar();
             case "3":
-                // Load from datafile
-                this.ListRnreturnedCarCopies();
+                // List unreturned car copies
+                this.ListUnreturnedCarCopies();
             case "4":
                 // Return to main menu
                 // equal to doing nothing
@@ -41,6 +43,7 @@ public class Manager {
                 // shouldn't be used as it is checked above
                 
         }
+        this.input_scanner.close();
     }
 
     private void DisplayMenu(){
@@ -61,7 +64,7 @@ public class Manager {
 
     }
 
-    private void ListRnreturnedCarCopies(){
+    private void ListUnreturnedCarCopies(){
 
     }
 

@@ -1,3 +1,5 @@
+
+package Admin;
 import java.sql.Connection;
 
 import java.util.Scanner; // class for user input
@@ -9,13 +11,14 @@ public class Admin {
     // }
     private Set<String> ops = Set.of("1","2","3","4","5");
     private Connection con;
-    private Scanner input_scanner = new Scanner(System.in);    
+    private Scanner input_scanner = new Scanner(System.in);
+    private String operation;    
     public Admin(Connection connection){
         con = connection;
     }
-    public void operation(Scanner input_scanner){
+    public void operation(){
         this.DisplayMenu();
-        String operation = input_scanner.nextLine();
+        operation = this.input_scanner.nextLine();
         
         while (! this.ops.contains(operation)){
             System.out.println("invalid operation id! Please input again.");

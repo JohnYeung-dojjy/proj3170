@@ -1,3 +1,4 @@
+package User;
 import java.sql.Connection;
 
 import java.util.Scanner; // class for user input
@@ -11,12 +12,13 @@ public class User {
     private Set<String> ops = Set.of("1","2","3");
     private Connection con;
     private Scanner input_scanner = new Scanner(System.in);  
+    private String operation; 
     public User(Connection connection){
         con = connection;
     }
-    public void operation(Scanner input_scanner){
+    public void operation(){
         this.DisplayMenu();
-        String operation = this.input_scanner.nextLine();
+        operation = this.input_scanner.nextLine();
         
         while (! this.ops.contains(operation)){
             System.out.println("invalid operation id! Please input again.");
@@ -25,10 +27,13 @@ public class User {
         } 
         switch (operation) {
             case "1":
-                // Create all tables
+                // Search for cars by
+                // 1. call number
+                // 2. car name
+                // 3. company
                 this.SearchForCars();
             case "2":
-                // Delete all tables
+                // Show renting records of a user
                 this.ShowUserRentingRecords();
             case "3":
                 // Return to main menu
@@ -38,6 +43,7 @@ public class User {
                 // shouldn't be used as it is checked above
                 
         }
+        this.input_scanner.close();
     }
 
     private void DisplayMenu(){
@@ -55,11 +61,40 @@ public class User {
         System.out.println("2. name");
         System.out.println("3. company");
         System.out.println("Choose the search criterion: ");
+        operation = this.input_scanner.nextLine();
+        
+        while (! this.ops.contains(operation)){
+            System.out.println("invalid criterion id! Please input again.");
+            System.out.println("Enter Yours Choice: ");
+            operation = this.input_scanner.nextLine();
+        }
+        
+        switch (operation){
+            case "1":
+                this.SearchByCallNumber();
+            case "2":
+                this.SearchByName();
+            case "3":
+                this.SearchByCompany();
 
+
+        }
 
     }
 
     private void ShowUserRentingRecords(){
+
+    }
+
+    private void SearchByCallNumber(){
+
+    }
+
+    private void SearchByName(){
+
+    }
+
+    private void SearchByCompany(){
 
     }
 

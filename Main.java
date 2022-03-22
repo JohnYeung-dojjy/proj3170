@@ -47,30 +47,40 @@ public class Main {
         while (!program_end) {
             DisplayMenu();
             String operation = input_scanner.nextLine();
+            System.out.println("");
 
             while (! ops.contains(operation)){
             System.out.println("invalid operation id! Please input again.");
-            System.out.println("Enter Yours Choice: ");
+            System.out.print("Enter Yours Choice: ");
             operation = input_scanner.nextLine();
+            System.out.println("");
         } 
             switch (operation) {
                 case "1":
                     // Admin operation
                     admin.operation();
+                    break;
                 case "2":
                     // User operation
                     user.operation();
+                    break;
                 case "3":
                     // Manager operation
                     manager.operation();
+                    break;
                 case "4":
                     // exit this program
                     program_end = true;
+                    break;
                 default:
                     // if none of the above matches
             }
-            input_scanner.close(); // close input scanner at the end of program
         }
+        
+        input_scanner.close(); // close input scanner at the end of program
+        admin.input_scanner.close(); // close admin input scanner
+        user.input_scanner.close(); // close user input scanner
+        manager.input_scanner.close(); // close manager input scanner
         
 
         System.out.println("Thank you for using our Car Renting System!\nGood bye.");
@@ -84,7 +94,7 @@ public class Main {
         System.out.println("2. Operations for User");
         System.out.println("3. Operations for Manager");
         System.out.println("4. Exit this program");
-        System.out.println("Enter Yours Choice: ");
+        System.out.print("Enter Yours Choice: ");
     }
     
 }

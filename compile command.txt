@@ -1,0 +1,1 @@
+javac ./SystemUser/Admin.java ./SystemUser/User.java ./SystemUser/Manager.java Main.java

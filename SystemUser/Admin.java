@@ -11,42 +11,52 @@ public class Admin {
     // }
     private Set<String> ops = Set.of("1","2","3","4","5");
     private Connection con;
-    private Scanner input_scanner = new Scanner(System.in);
-    private String operation;    
+    public Scanner input_scanner = new Scanner(System.in);
+    private String operation; 
     public Admin(Connection connection){
         con = connection;
     }
     public void operation(){
-        this.DisplayMenu();
-        operation = this.input_scanner.nextLine();
-        
-        while (! this.ops.contains(operation)){
-            System.out.println("invalid operation id! Please input again.");
-            System.out.println("Enter Yours Choice: ");  
+        Boolean isUsing = true;
+        while(isUsing){
+            this.DisplayMenu();
             operation = this.input_scanner.nextLine();
-        } 
-        switch (operation) {
-            case "1":
-                // Create all tables
-                this.CreateTableSchemas();
-            case "2":
-                // Delete all tables
-                this.DeleteTableSchemas();
-            case "3":
-                // Load from datafile
-                this.LoadData();
-            case "4":
-                // Show number of records in each table
-                this.ShowRecordNumber();
-            case "5":
-                // Return to main menu
-                // equal to doing nothing
-            default:
-                // if none of the above matches
-                // shouldn't be used as it is checked above
-                
+            System.out.println("");
+            
+            while (! this.ops.contains(operation)){
+                System.out.println("invalid operation id! Please input again.");
+                System.out.print("Enter Yours Choice: ");  
+                operation = this.input_scanner.nextLine();
+                System.out.println("");
+            } 
+            switch (operation) {
+                case "1":
+                    // Create all tables
+                    this.CreateTableSchemas();
+                    break;
+                case "2":
+                    // Delete all tables
+                    this.DeleteTableSchemas();
+                    break;
+                case "3":
+                    // Load from datafile
+                    this.LoadData();
+                    break;
+                case "4":
+                    // Show number of records in each table
+                    this.ShowRecordNumber();
+                    break;
+                case "5":
+                    // Return to main menu
+                    // equal to doing nothing
+                    isUsing = false;
+                    break;
+                default:
+                    // if none of the above matches
+                    // shouldn't be used as it is checked above
+                    
+            }
         }
-        this.input_scanner.close();
     }
 
     private void DisplayMenu(){
@@ -57,7 +67,7 @@ public class Admin {
         System.out.println("3. Load from datafile");
         System.out.println("4. Show number of records in each table");
         System.out.println("5. Return to the main menu");
-        System.out.println("Enter Yours Choice: ");
+        System.out.print("Enter Yours Choice: ");
     }
     private void CreateTableSchemas(){
 

@@ -6,9 +6,7 @@ import java.lang.*;
 import java.util.Scanner; // class for user input
 import java.util.Set;
 
-import Admin.Admin;
-import User.User;
-import Manager.Manager;
+import SystemUser.*;
 
 
 public class Main {
@@ -25,9 +23,9 @@ public class Main {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 con = DriverManager.getConnection(dbAddress, dbUsername, dbPassword);
-        
+                
                 // Do something with the Connection
-        
+                
             } catch (ClassNotFoundException e) {
                 System.out.println("[Error]: Java MySQL DB Driver not found");
                 System.exit(0);
@@ -38,6 +36,7 @@ public class Main {
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
             }
+        
         Admin admin = new Admin(con);
         Manager manager = new Manager(con);
         User user = new User(con);  

@@ -1,5 +1,5 @@
 
-package Admin;
+package SystemUser;
 import java.sql.Connection;
 
 import java.util.Scanner; // class for user input

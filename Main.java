@@ -1,3 +1,4 @@
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,7 +15,7 @@ public class Main {
     private static Set<String> ops = Set.of("1","2","3","4");
     public static void main(String[] args)
     {
-        String dbAddress = "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/db075";
+        String dbAddress = "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/db12";
         String dbUsername = "Group12";
         String dbPassword = "love4ever<3";
         

@@ -181,6 +181,14 @@ public class Admin {
 
     private void ShowRecordNumber(){
         System.out.println("Number of records in each table:");
+        try{
+            int noOfRowsPerTable[] = new int[8];
+            Statement stmt=con.createStatement();
+            
+        }
+        catch (SQLException e){
+            System.out.println(e);
+        } 
         System.out.println();
     }
 

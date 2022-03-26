@@ -1,10 +1,13 @@
-
 package SystemUser;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner; // class for user input
 import java.util.Set;
+import java.io.File;  
+import java.io.FileNotFoundException;  
+
 public class Admin {
     // public static void main(String[] args)
     // {
@@ -77,7 +80,7 @@ public class Admin {
             Statement stmt=con.createStatement();
             //SQL Query
             //userCategory
-            String userCategoryQ="CREATE TABLE userCategory(" +
+            String userCategoryQ="CREATE TABLE user_category(" +
                     "ucid ," +
                     "max," +
                     "period," + 
@@ -95,7 +98,7 @@ public class Admin {
                 "FOREIGN KEY () REFERENCES " +
                 ")";	     
                 stmt.executeUpdate(userQ);
-            String carCategoryQ="CREATE TABLE carCategory(" +
+            String carCategoryQ="CREATE TABLE car_category(" +
                 "ccid ," +
                 "ccname," +
                 "PRIMARY KEY ()," + 
@@ -128,14 +131,12 @@ public class Admin {
                 "FOREIGN KEY () REFERENCES " +
                 ")";	     
                 stmt.executeUpdate(rentQ);
-            String produceQ="CREATE TABLE produce(" +
-                "cname ," +
-                "callnum," +
-                "PRICE varchar(10)," + 
-                "PRIMARY KEY ()," + 
+            String companyQ="CREATE TABLE produce(" +
+                "cname, " +
+                "PRIMARY KEY (), " + 
                 "FOREIGN KEY () REFERENCES " +
                 ")";	     
-                stmt.executeUpdate(produceQ);
+                stmt.executeUpdate(companyQ);
         }
         catch (SQLException e){
             System.out.println(e);
@@ -150,13 +151,13 @@ public class Admin {
             //initialize Statement
             Statement stmt=con.createStatement();
             //SQL Query
-            String deleteTableQuery="DROP TABLE IF EXISTS userCategory, " +
+            String deleteTableQuery="DROP TABLE IF EXISTS user_category, " +
                                     "user, " +
-                                    "carCategory, " +
+                                    "car_category, " +
                                     "car, " +
                                     "copy, " +
-                                    "rent, " +
-                                    "produce" ;
+                                    "company, " +
+                                    "rent" ;
             
             //Run Query
             stmt.executeUpdate(deleteTableQuery);
@@ -174,6 +175,21 @@ public class Admin {
         String path;
         Scanner pathReader = new Scanner(System.in);
         path = pathReader.nextLine();
+        //read from wanted file
+            File inputFile = new File(path+".txt");;
+            ArrayList<String[]> Data = new ArrayList<>(); 
+            try (BufferedReader TSVReader = new BufferedReader(new FileReader(inputFile))) {
+                String line = null;
+                while ((line = TSVReader.readLine()) != null) {
+                    String[] lineItems = line.split("\t"); 
+                    Data.add(lineItems); 
+                }
+            } catch (Exception e) {
+                System.out.println("Something went wrong");
+            }
+        //Write to database    
+            Statement stmt=con.createStatement();
+            stmt.executeUpdate ( "insert into "+ path +" values (  )" );
 
         System.out.println("Done. Data is inputted to the database.");
         pathReader.close();
@@ -181,11 +197,54 @@ public class Admin {
 
     private void ShowRecordNumber(){
         System.out.println("Number of records in each table:");
+        String[] tableNames = {"user_category", "user", "car_category", "car", "copy", "company", "rent" };
+        int[] noRecord = new int[8];
         try{
-            int noOfRowsPerTable[] = new int[8];
             Statement stmt=con.createStatement();
-            
+            ResultSet rs1 = stmt.executeQuery("SELECT COUNT(*) AS counter FROM user_category");
+            while (rs1.next()) {
+                noRecord[0] = rs1.getInt("counter");
+            }
+            System.out.println(tableNames[0] + ": " + noRecord[0]);
+            ResultSet rs2 = stmt.executeQuery("SELECT COUNT(*) AS counter FROM user");
+            while (rs2.next()) {
+                noRecord[1] = rs2.getInt("counter");
+            }
+            System.out.println(tableNames[1] + ": " + noRecord[1]);
+            ResultSet rs3 = stmt.executeQuery("SELECT COUNT(*) AS counter FROM car_category");
+            while (rs3.next()) {
+                noRecord[2] = rs3.getInt("counter");
+            }
+            System.out.println(tableNames[2] + ": " + noRecord[2]);
+            ResultSet rs4 = stmt.executeQuery("SELECT COUNT(*) AS counter FROM car");
+            while (rs4.next()) {
+                noRecord[3] = rs4.getInt("counter");
+            }
+            System.out.println(tableNames[3] + ": " + noRecord[3]);
+            ResultSet rs5 = stmt.executeQuery("SELECT COUNT(*) AS counter FROM copy");
+            while (rs5.next()) {
+                noRecord[4] = rs5.getInt("counter");
+            }
+            System.out.println(tableNames[4] + ": " + noRecord[4]);
+            ResultSet rs6 = stmt.executeQuery("SELECT COUNT(*) AS counter FROM company");
+            while (rs6.next()) {
+                noRecord[5] = rs6.getInt("counter");
+            }
+            System.out.println(tableNames[5] + ": " + noRecord[5]);
+            ResultSet rs7 = stmt.executeQuery("SELECT COUNT(*) AS counter FROM rent");
+            while (rs7.next()) {
+                noRecord[6] = rs7.getInt("counter");
+            }
+            System.out.println(tableNames[6] + ": " + noRecord[6]);
+            rs1.close();
+            rs2.close();
+            rs3.close();
+            rs4.close();
+            rs5.close();
+            rs6.close();
+            re7.close();
         }
+        
         catch (SQLException e){
             System.out.println(e);
         } 

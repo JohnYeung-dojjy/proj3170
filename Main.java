@@ -43,7 +43,8 @@ public class Main {
         User user = new User(con);  
         
         Boolean program_end = false;
-
+        
+        System.out.println("Welcome to Car Renting System!\n");
         while (!program_end) {
             DisplayMenu();
             String operation = input_scanner.nextLine();
@@ -87,7 +88,6 @@ public class Main {
     }
     
     private static void DisplayMenu(){
-        System.out.println("Welcome to Car Renting System!\n");
         System.out.println("-----Main menu-----");
         System.out.println("What kinds of operations would you like to perform?");
         System.out.println("1. Operations for Administrator");

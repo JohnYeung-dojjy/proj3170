@@ -131,7 +131,7 @@ public class Admin {
                 "FOREIGN KEY () REFERENCES " +
                 ")";	     
                 stmt.executeUpdate(rentQ);
-            String companyQ="CREATE TABLE produce(" +
+            String companyQ="CREATE TABLE company(" +
                 "cname, " +
                 "PRIMARY KEY (), " + 
                 "FOREIGN KEY () REFERENCES " +

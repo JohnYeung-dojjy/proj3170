@@ -76,6 +76,7 @@ public class Admin {
         System.out.println("5. Return to the main menu");
         System.out.print("Enter Yours Choice: ");
     }
+    //ch3
     private void CreateTableSchemas(){
         System.out.print("Processing...");
         //initialize Statement
@@ -84,58 +85,56 @@ public class Admin {
             //SQL Query
             //userCategory
             String userCategoryQ="CREATE TABLE user_category(" +
-                    "ucid INT(1) UNSIGNED ZEROFILL NOT NULL," +
-                    "max INT(1) UNSIGNED ZEROFILL NOT NULL," +
-                    "period INT(2) UNSIGNED ZEROFILL NOT NULL," + 
-                    "PRIMARY KEY (sid, cid)," +
-                    "FOREIGN KEY (sid) REFERENCES " +
+                    "ucid INT(1) NOT NULL," +
+                    "max INT(1)  NOT NULL," +
+                    "period INT(2) NOT NULL," + 
+                    "PRIMARY KEY (ucid)" +
                     ")";	     
                 stmt.executeUpdate(userCategoryQ);
             String userQ="CREATE TABLE user(" +
-                "uid VARCHAR(16), " +
-                "name, " +
-                "age, " + 
-                "occupation, " +
-                "ucid," +
-                "PRIMARY KEY ()," + 
-                "FOREIGN KEY () REFERENCES " +
+                "uid VARCHAR(12) NOT NULL, " +
+                "name VARCHAR(25) NOT NULL, " +
+                "age INT(2) NOT NULL, " + 
+                "occupation VARCHAR(20) NOT NULL, " +
+                "ucid INT(1) NOT NULL," +
+                "PRIMARY KEY (uid)" + 
                 ")";	     
                 stmt.executeUpdate(userQ);
             String carCategoryQ="CREATE TABLE car_category(" +
-                "ccid ," +
-                "ccname," +
-                "PRIMARY KEY ()," + 
-                "FOREIGN KEY () REFERENCES " +
+                "ccid INT(1) NOT NULL," +
+                "ccname VARCHAR(20) NOT NULL," +
+                "PRIMARY KEY (ccid)" + 
                 ")";	     
                 stmt.executeUpdate(carCategoryQ);
             String carQ="CREATE TABLE car(" +
-                "callnum, " +
-                "name, " +
-                "manufacture, " + 
-                "time_rent, " +
-                "ccid, " +
+                "callnum VARCHAR(8) NOT NULL, " +
+                "name VARCHAR(10) NOT NULL, " +
+                "manufacture DATE NOT NULL, " + 
+                "time_rent DATE NOT NULL, " +
+                "ccid INT(1) NOT NULL, " +
                 "PRIMARY KEY(), " +
                 "FOREIGN KEY () REFERENCES " +
                 ")";	     
                 stmt.executeUpdate(carQ);
             String copyQ="CREATE TABLE copy(" +
-                "callnum," +
-                "copynum," +
+                "callnum VARCHAR(8) NOT NULL," +
+                "copynum INT(1) NOT NULL," +
                 "PRIMARY KEY()" +
                 ")";	     
                 stmt.executeUpdate(copyQ);
             String rentQ="CREATE TABLE rent(" +
-                "uid, " +
-                "callnum, " +
-                "copynum, " +
-                "checkout, " +
-                "return," +
+                "uid VARCHAR(12) NOT NULL, " +
+                "callnum VARCHAR(8) NOT NULL, " +
+                "copynum INT(1) NOT NULL, " +
+                "checkout DATE NOT NULL, " +
+                "return DATE NOT NULL," +
                 "PRIMARY KEY ()," + 
                 "FOREIGN KEY () REFERENCES " +
                 ")";	     
                 stmt.executeUpdate(rentQ);
             String produceQ="CREATE TABLE produce(" +
-                "cname, " +
+                "cname VARCHAR(25) NOT NULL, " +
+                "callnum VARCHAR(8) NOT NULL, " +
                 "PRIMARY KEY (), " + 
                 "FOREIGN KEY () REFERENCES " +
                 ")";	     

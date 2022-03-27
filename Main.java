@@ -1,4 +1,3 @@
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,7 +7,6 @@ import java.util.Scanner; // class for user input
 import java.util.Set;
 
 import SystemUser.*;
-
 
 public class Main {
     private static Scanner input_scanner = new Scanner(System.in);

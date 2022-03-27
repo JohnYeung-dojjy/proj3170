@@ -3,10 +3,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner; // class for user input
 import java.util.Set;
+import java.io.BufferedReader;
 import java.io.File;  
-import java.io.FileNotFoundException;  
+import java.io.FileNotFoundException;
+import java.io.FileReader;  
 
 public class Admin {
     // public static void main(String[] args)
@@ -81,15 +84,15 @@ public class Admin {
             //SQL Query
             //userCategory
             String userCategoryQ="CREATE TABLE user_category(" +
-                    "ucid ," +
-                    "max," +
-                    "period," + 
+                    "ucid INT(1) UNSIGNED ZEROFILL NOT NULL," +
+                    "max INT(1) UNSIGNED ZEROFILL NOT NULL," +
+                    "period INT(2) UNSIGNED ZEROFILL NOT NULL," + 
                     "PRIMARY KEY (sid, cid)," +
                     "FOREIGN KEY (sid) REFERENCES " +
                     ")";	     
                 stmt.executeUpdate(userCategoryQ);
             String userQ="CREATE TABLE user(" +
-                "uid, " +
+                "uid VARCHAR(16), " +
                 "name, " +
                 "age, " + 
                 "occupation, " +
@@ -131,12 +134,12 @@ public class Admin {
                 "FOREIGN KEY () REFERENCES " +
                 ")";	     
                 stmt.executeUpdate(rentQ);
-            String companyQ="CREATE TABLE company(" +
+            String produceQ="CREATE TABLE produce(" +
                 "cname, " +
                 "PRIMARY KEY (), " + 
                 "FOREIGN KEY () REFERENCES " +
                 ")";	     
-                stmt.executeUpdate(companyQ);
+                stmt.executeUpdate(produceQ);
         }
         catch (SQLException e){
             System.out.println(e);
@@ -183,13 +186,14 @@ public class Admin {
                 while ((line = TSVReader.readLine()) != null) {
                     String[] lineItems = line.split("\t"); 
                     Data.add(lineItems); 
+                    System.out.println(lineItems);
                 }
             } catch (Exception e) {
                 System.out.println("Something went wrong");
             }
         //Write to database    
-            Statement stmt=con.createStatement();
-            stmt.executeUpdate ( "insert into "+ path +" values (  )" );
+            // Statement stmt=con.createStatement();
+            // stmt.executeUpdate ( "insert into "+ path +" values (  )" );
 
         System.out.println("Done. Data is inputted to the database.");
         pathReader.close();
@@ -197,7 +201,7 @@ public class Admin {
 
     private void ShowRecordNumber(){
         System.out.println("Number of records in each table:");
-        String[] tableNames = {"user_category", "user", "car_category", "car", "copy", "company", "rent" };
+        String[] tableNames = {"user_category", "user", "car_category", "car", "copy", "produce", "rent" };
         int[] noRecord = new int[8];
         try{
             Statement stmt=con.createStatement();
@@ -226,7 +230,7 @@ public class Admin {
                 noRecord[4] = rs5.getInt("counter");
             }
             System.out.println(tableNames[4] + ": " + noRecord[4]);
-            ResultSet rs6 = stmt.executeQuery("SELECT COUNT(*) AS counter FROM company");
+            ResultSet rs6 = stmt.executeQuery("SELECT COUNT(*) AS counter FROM produce");
             while (rs6.next()) {
                 noRecord[5] = rs6.getInt("counter");
             }
@@ -242,7 +246,7 @@ public class Admin {
             rs4.close();
             rs5.close();
             rs6.close();
-            re7.close();
+            rs7.close();
         }
         
         catch (SQLException e){

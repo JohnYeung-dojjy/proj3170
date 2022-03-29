@@ -1,7 +1,7 @@
 package SystemUser;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-// import java.sql.Date;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,7 +10,7 @@ import java.util.Scanner; // class for user input
 import java.util.Set;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+// import java.util.Date;
 import java.text.ParseException;
 
 public class Manager {
@@ -70,7 +70,68 @@ public class Manager {
     }
 
     private void RentCarCopy(){
+        PreparedStatement st;
+        ResultSet rs = null;
+        String UserID = this.getInput("Enter The User ID: ");
+        try{
+            st = con.prepareStatement("SELECT * FROM user WHERE uid=?");
+            st.setString(1, UserID);
+            rs = st.executeQuery();
+            if(!rs.next()){
+                System.out.println("User not exist! Exiting operation...");
+                return;
+            }
+        }catch(SQLException e){
+            System.out.println("something went wrong: " + e.getMessage());
+            System.out.println("exiting operation...");
+            return;
+        }
 
+        String CallNum = this.getInput("Enter The Call Number: ");
+        String CopyNum = this.getInput("Enter The Copy Number: ");
+        try{
+            st = con.prepareStatement("SELECT * FROM copy WHERE callnum=? AND copynum=?");
+            st.setString(1, CallNum);
+            st.setString(2, CopyNum);
+            rs = st.executeQuery();
+            if(!rs.next()){
+                System.out.println("Car copy not exist! Exiting operation...");
+                return;
+            }
+        }catch(SQLException e){
+            System.out.println("something went wrong: " + e.getMessage());
+            System.out.println("exiting operation...");
+            return;
+
+        }
+        try{
+            st = con.prepareStatement("SELECT * FROM rent WHERE uid=? AND callnum=? AND copynum=? AND return=NULL");
+            st.setString(1, UserID);
+            st.setString(2, CallNum);
+            st.setString(3, CopyNum);
+            rs = st.executeQuery();
+            
+            if(!rs.next()){// if there is no rent record of the specified car copy with NULL return date
+                // borrow the car copy
+                // insert record into rent
+                // uid=UserID, callnum=CallNum, copynum=CopyNum, checkout=Date, return=NULL
+                st = con.prepareStatement("INSERT INTO rent(uid, callnum, copynum, checkout, return) VALUES (?, ?, ?, ?, NULL)");
+
+                st.setString(1, UserID);
+                st.setString(2, CallNum);
+                st.setString(3, CopyNum);
+                java.util.Date today = new java.util.Date();
+                st.setDate(4, new Date(today.getTime()));
+
+                st.executeUpdate();
+                
+            }
+        
+        }catch(SQLException e){
+            System.out.println("something went wrong: " + e.getMessage());
+            System.out.println("exiting operation...");
+            return;
+        }
     }
 
     private void ReturnCar(){
@@ -82,49 +143,57 @@ public class Manager {
         PreparedStatement st;
         ResultSet rs = null;
         String d1="dd/mm/yyyy", d2="dd/mm/yyyy"; //date_1, date_2
-        Boolean d1_ok=false, d2_ok=false;
+        // Boolean d1_ok=false, d2_ok=false;
+
+        java.util.Date util_d1 = new java.util.Date();
+        java.util.Date util_d2 = new java.util.Date();
+        
+        /*
+        * Set preferred date format,
+        * For example MM-dd-yyyy, MM.dd.yyyy,dd.MM.yyyy etc.*/
+        SimpleDateFormat sdfrmt = new SimpleDateFormat("dd/MM/yyyy");
+        sdfrmt.setLenient(false);  // range of day/month/year must be valid https://blog.csdn.net/KingJin_CSDN_/article/details/53893210
+        /* Create Date object
+        * parse the string into date 
+        */
         // check if both dates input are valid, if user input 'return', operation will be cancelled and return to manager menu
-        while (!d1_ok){
-            d1 = this.getInput("Type in the starting date [dd/mm/yyyy] [type 'return' to cancel operation]: ");
 
-            // if user input 'return', operation will be cancelled and return to Manager menu
-            if (d1 =="return"){
-                return;
-            }
+        d1 = this.getInput("Type in the starting date [dd/mm/yyyy]: ");
 
-            // check if input date is in valid format
-            if (validateJavaDate(d1)){
-                d1_ok = true;
-            }else{
-                System.out.println(d1+" is Invalid Date format, please try again!");
-            }
+        // check if input date is in valid format
+        try{
+            util_d1 = sdfrmt.parse(d1); // check if d1 is in correct format, if not, ParseException is thrown
+            // d1_ok = true;   // break the loop
+        }catch (ParseException e){
+            System.out.println(d1+" is Invalid Date format! Exiting operation...");
+            return;
         }
-        while (!d2_ok){
-            d2 = this.getInput("Type in the ending date [dd/mm/yyyy]  [type 'return' to cancel operation]: ");
 
-            // if user input 'return', operation will be cancelled and return to Manager menu
-            if (d2 =="return"){
-                return;
-            }
-
-            // check if input date is in valid format
-            if (validateJavaDate(d2)){
-                d2_ok = true;
-            }else{
-                System.out.println(d2+" is Invalid Date format, please try again!");
-            }
+        d2 = this.getInput("Type in the ending date [dd/mm/yyyy]: ");
+        // check if input date is in valid format
+        try{
+            util_d2 = sdfrmt.parse(d2); // check if d2 is in correct format, if not, ParseException is thrown
+            // d2_ok = true;   // break the loop
+        }catch (ParseException e){
+            System.out.println(d2+" is Invalid Date format! Exiting operation...");
+            return;
         }
+
             
         try{
+            
+            // select rent records where cars hasn't been returned, and was rented between the range
+            st = con.prepareStatement("SELECT * FROM rent WHERE return=NULL AND `checkout` BETWEEN ? and ? ORDER BY checkout ASC");
+            Date sql_d1 = new Date(util_d1.getTime()); // change date from input format into sql format
+            Date sql_d2 = new Date(util_d2.getTime()); // change date from input format into sql format
+            st.setDate(1, sql_d1);  // set first  ? in st to sql_d1
+            st.setDate(2, sql_d2);  // set second ? in st to sql_d2
+            rs = st.executeQuery();
+
+            // print out all unreturned cars
             System.out.println("List of UnReturned Cars");
             System.out.println("|    UID     |CallNum |CopyNum| Checkout  |");
-            // stmt = con.createStatement();
-            // rs = stmt.executeQuery("SELECT * FROM `rent` WHERE `return`=NULL;");
-            st = con.prepareStatement("SELECT * FROM rent WHERE return=NULL AND `checkout` BETWEEN ? and ? ORDER BY checkout ASC");
-            st.setString(1, d1);
-            st.setString(2, d2);
-            rs = st.executeQuery();
-            while(rs.next()){
+            while(rs.next()){ // print result of query one by one
                 String uid     = rs.getString("uid");
                 String callnum = rs.getString("callnum");
                 String copynum = rs.getString("copynum");
@@ -134,7 +203,7 @@ public class Manager {
             }
         }
         catch(SQLException ex){
-            System.out.println(ex);
+            // System.out.println(ex);
         }
         finally{
             System.out.println("End of Query");
@@ -142,40 +211,33 @@ public class Manager {
     }
 
     // from https://beginnersbook.com/2013/05/java-date-format-validation/
-    private boolean validateJavaDate(String strDate)
+    private boolean validateDate(String strDate)
     {
-        /* Check if date is 'null' */
-        if (strDate.trim().equals(""))
+        /*
+        * Set preferred date format,
+        * For example MM-dd-yyyy, MM.dd.yyyy,dd.MM.yyyy etc.*/
+        SimpleDateFormat sdfrmt = new SimpleDateFormat("dd/MM/yyyy");
+        sdfrmt.setLenient(false);  // range of day/month/year must be valid https://blog.csdn.net/KingJin_CSDN_/article/details/53893210
+        /* Create Date object
+        * parse the string into date 
+            */
+        try
         {
-            return false; // null is not accepted
+            java.util.Date javaDate = sdfrmt.parse(strDate); 
+            // System.out.println(strDate+" is valid date format");
         }
-        /* Date is not 'null' */
-        else
+        /* Date format is invalid */
+        catch (ParseException e)
         {
-            /*
-            * Set preferred date format,
-            * For example MM-dd-yyyy, MM.dd.yyyy,dd.MM.yyyy etc.*/
-            SimpleDateFormat sdfrmt = new SimpleDateFormat("dd/MM/yyyy");
-            sdfrmt.setLenient(false);
-            /* Create Date object
-            * parse the string into date 
-                */
-            try
-            {
-                Date javaDate = sdfrmt.parse(strDate); 
-                // System.out.println(strDate+" is valid date format");
-            }
-            /* Date format is invalid */
-            catch (ParseException e)
-            {
-                // System.out.println(strDate+" is Invalid Date format");
-                return false;
-            }
-            /* Return true if date format is valid */
-            return true;
+            // System.out.println(strDate+" is Invalid Date format");
+            return false;
         }
+        /* Return true if date format is valid */
+        return true;
+
     }
     private String getInput(String display_text){
+        // Syntax sugar for better UI representation when getting user input
         String user_input;
         System.out.print(display_text);
         user_input = this.input_scanner.nextLine();

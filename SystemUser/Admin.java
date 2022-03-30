@@ -308,6 +308,33 @@ public class Admin {
         
     }
 
+    public void loadUserCategory(ArrayList<String[]> data){
+        for (String[] item: data){
+            String ucid = item[0];
+            String max = item[1];
+            String period = item[2];
+            // insert to db
+        }
+    }
+
+    public void loadUser(ArrayList<String[]> data){
+        
+    }
+
+    public void loadCarCategory(ArrayList<String[]> data){
+        
+    }
+
+    public void loadRent(ArrayList<String[]> data){
+
+    }
+
+    public void loadCar(ArrayList<String[]> data){
+        
+    }
+
+    
+
 }
 
 // userCategory (ucid, max, period)
@@ -317,3 +344,4 @@ public class Admin {
 // copy (callnum, copynum)
 // rent (uid, callnum, copynum, checkout, return)
 // produce (cname, callnum)
+

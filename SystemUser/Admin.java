@@ -127,7 +127,7 @@ public class Admin {
                 "callnum VARCHAR(8) NOT NULL, " +
                 "copynum INT(1) NOT NULL, " +
                 "checkout DATE NOT NULL, " +
-                "return DATE NOT NULL," +
+                "return DATE ," +
                 "PRIMARY KEY ()," + 
                 "FOREIGN KEY () REFERENCES " +
                 ")";	     

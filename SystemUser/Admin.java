@@ -178,6 +178,7 @@ public class Admin {
         String path;
         Scanner pathReader = new Scanner(System.in);
         path = pathReader.nextLine();
+        
         //read from wanted file
             // File inputFile = new File(path+".txt");
             // ArrayList<String[]> Data = new ArrayList<>(); 
@@ -191,9 +192,18 @@ public class Admin {
             // } catch (Exception e) {
             //     System.out.println("Something went wrong");
             // }
+        try{
+            ArrayList<String[]> data = this.readDataFile(path);
+        }catch(FileNotFoundException e){
+            System.out.println("File Not Found");
+            pathReader.close();
+            return;
+        }
+
         switch (path) {
             case "user_category":
                 // some code
+                
                 break;
 
             case "user":
@@ -212,7 +222,7 @@ public class Admin {
                 //
                 break;
             default:
-                System.out.println("This file does not exist");
+                // no use
                 break;
             
         }

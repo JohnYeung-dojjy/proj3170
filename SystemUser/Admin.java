@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.File;  
 import java.io.FileNotFoundException;
 import java.io.FileReader;  
+import java.util.ArrayList;
 
 public class Admin {
     // public static void main(String[] args)
@@ -178,18 +179,43 @@ public class Admin {
         Scanner pathReader = new Scanner(System.in);
         path = pathReader.nextLine();
         //read from wanted file
-            File inputFile = new File(path+".txt");;
-            ArrayList<String[]> Data = new ArrayList<>(); 
-            try (BufferedReader TSVReader = new BufferedReader(new FileReader(inputFile))) {
-                String line = null;
-                while ((line = TSVReader.readLine()) != null) {
-                    String[] lineItems = line.split("\t"); 
-                    Data.add(lineItems); 
-                    System.out.println(lineItems);
-                }
-            } catch (Exception e) {
-                System.out.println("Something went wrong");
-            }
+            // File inputFile = new File(path+".txt");
+            // ArrayList<String[]> Data = new ArrayList<>(); 
+            // try (BufferedReader TSVReader = new BufferedReader(new FileReader(inputFile))) {
+            //     String line = null;
+            //     while ((line = TSVReader.readLine()) != null) {
+            //         String[] lineItems = line.split("\t"); 
+            //         Data.add(lineItems); 
+            //         System.out.println(lineItems);
+            //     }
+            // } catch (Exception e) {
+            //     System.out.println("Something went wrong");
+            // }
+        switch (path) {
+            case "user_category":
+                // some code
+                break;
+
+            case "user":
+                // 
+                break;
+
+            case "car_category":
+                //
+                break;
+
+            case "rent":
+                //
+                break;
+
+            case "car":
+                //
+                break;
+            default:
+                System.out.println("This file does not exist");
+                break;
+            
+        }
         //Write to database    
             // Statement stmt=con.createStatement();
             // stmt.executeUpdate ( "insert into "+ path +" values (  )" );
@@ -252,6 +278,24 @@ public class Admin {
             System.out.println(e);
         } 
         System.out.println();
+    }
+
+    // see example at the bottom to loop over the returned ArrayList https://www.w3schools.com/java/java_arraylist.asp
+    public ArrayList<String[]> readDataFile(String fileName) throws FileNotFoundException{
+        
+        File DataFile = new File(fileName+".txt");
+        Scanner fileReader = new Scanner(DataFile);
+        ArrayList<String[]> data = new ArrayList<String[]>();
+        while (fileReader.hasNextLine()) {
+            String fileData = fileReader.nextLine();
+            //System.out.println(data);
+            String[] lineItems = fileData.split("\t");
+            data.add(lineItems);
+        }
+        fileReader.close();
+
+        return data;
+        
     }
 
 }

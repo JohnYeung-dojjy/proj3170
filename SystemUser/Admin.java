@@ -142,7 +142,7 @@ public class Admin {
             String copyQ="CREATE TABLE IF NOT EXISTS copy(" +
                 "callnum VARCHAR(8) NOT NULL," +
                 "copynum INT(1) NOT NULL," +
-                "PRIMARY KEY(callnum, copynum)," +
+                "PRIMARY KEY (callnum, copynum)," +
                 "FOREIGN KEY (copynum) REFERENCES rent(copynum) ON DELETE CASCADE," +
                 "FOREIGN KEY (callnum) REFERENCES car(callnum) ON DELETE CASCADE" +
                 ")";	     
@@ -162,6 +162,7 @@ public class Admin {
             //initialize Statement
             Statement stmt=con.createStatement();
             //SQL Query
+            stmt.executeUpdate("SET foreign_key_checks = 0");
             String deleteTableQuery="DROP TABLE IF EXISTS user_category, " +
                                     "user, " +
                                     "car_category, " +
@@ -172,6 +173,7 @@ public class Admin {
             
             //Run Query
             stmt.executeUpdate(deleteTableQuery);
+            stmt.executeUpdate("SET foreign_key_checks = 1");
             System.out.println("Done. Database is removed.");
         }
         catch (SQLException e){

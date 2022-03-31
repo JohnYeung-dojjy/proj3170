@@ -100,7 +100,7 @@ public class Manager {
             }
         }catch(SQLException e){
             System.out.println("something went wrong: " + e.getMessage());
-            System.out.println("exiting operation...");
+            System.out.println("Car renting failed.");
             return;
 
         }
@@ -120,22 +120,70 @@ public class Manager {
                 st.setString(1, UserID);
                 st.setString(2, CallNum);
                 st.setString(3, CopyNum);
-                java.util.Date today = new java.util.Date();
+                java.util.Date today = new java.util.Date(); // the day of renting
                 st.setDate(4, new Date(today.getTime()));
 
                 st.executeUpdate();
                 
             }
+            System.out.println("Car renting performed successfully.");
+            // System.out.println("Rented car information:");
+            // System.out.println("");
         
         }catch(SQLException e){
             System.out.println("something went wrong: " + e.getMessage());
-            System.out.println("exiting operation...");
+            System.out.println("Car renting failed.");
             return;
         }
     }
 
     private void ReturnCar(){
+        PreparedStatement st;
+        ResultSet rs = null;
+        String UserID = this.getInput("Enter The User ID: ");
+        try{
+            st = con.prepareStatement("SELECT * FROM user WHERE uid=?");
+            st.setString(1, UserID);
+            rs = st.executeQuery();
+            if(!rs.next()){
+                System.out.println("User not exist! Exiting operation...");
+                return;
+            }
+        }catch(SQLException e){
+            System.out.println("something went wrong: " + e.getMessage());
+            System.out.println("exiting operation...");
+            return;
+        }
 
+        String CallNum = this.getInput("Enter The Call Number: ");
+        String CopyNum = this.getInput("Enter The Copy Number: ");
+        try{
+            st = con.prepareStatement("SELECT * FROM rent WHERE uid=? AND callnum=? AND copynum=? AND return=NULL"); // get the rent record where the car is still being rented
+            st.setString(1, UserID);
+            st.setString(2, CallNum);
+            st.setString(3, CopyNum);
+            rs = st.executeQuery();
+            if(rs.next()){
+                st = con.prepareStatement("UPDATE rent SET return=? WHERE uid=? AND callnum=? AND copynum=? AND return=NULL"); // update that rent record
+                java.util.Date today = new java.util.Date(); // the day of returning
+                st.setDate(1, new Date(today.getTime()));
+                st.setString(2, UserID);
+                st.setString(3, CallNum);
+                st.setString(4, CopyNum);
+                rs = st.executeQuery();
+
+                System.out.println("Car returning performed successfully");
+            }else{
+                System.out.println("Record not exist! Exiting operation...");
+                System.out.println("Car returning failed.");
+                return;
+            }
+        }catch(SQLException e){
+            System.out.println("something went wrong: " + e.getMessage());
+            System.out.println("Car returning failed.");
+            return;
+
+        }
     }
 
     private void ListUnreturnedCarCopies(){
@@ -201,12 +249,12 @@ public class Manager {
                 System.out.println("|"+uid+"|"+callnum+"|   "+copynum+"   |"+checkout_date);
                 
             }
-        }
-        catch(SQLException ex){
-            // System.out.println(ex);
-        }
-        finally{
             System.out.println("End of Query");
+        }
+        catch(SQLException e){
+            System.out.println("something went wrong: " + e.getMessage());
+            // System.out.println(ex);
+            System.out.println("Car listing operation failed.");
         }
     }
 

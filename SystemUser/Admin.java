@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.File;  
 import java.io.FileNotFoundException;
 import java.io.FileReader;  
+import java.util.ArrayList;
 
 public class Admin {
     // public static void main(String[] args)
@@ -183,6 +184,7 @@ public class Admin {
         String path;
         Scanner pathReader = new Scanner(System.in);
         path = pathReader.nextLine();
+        
         //read from wanted file
             //Creating a File object for directory
             File dirPath = new File("./"+path+"/");
@@ -371,6 +373,51 @@ public class Admin {
         System.out.println();
     }
 
+    // see example at the bottom to loop over the returned ArrayList https://www.w3schools.com/java/java_arraylist.asp
+    public ArrayList<String[]> readDataFile(String fileName) throws FileNotFoundException{
+        
+        File DataFile = new File(fileName+".txt");
+        Scanner fileReader = new Scanner(DataFile);
+        ArrayList<String[]> data = new ArrayList<String[]>();
+        while (fileReader.hasNextLine()) {
+            String fileData = fileReader.nextLine();
+            //System.out.println(data);
+            String[] lineItems = fileData.split("\t");
+            data.add(lineItems);
+        }
+        fileReader.close();
+
+        return data;
+        
+    }
+
+    public void loadUserCategory(ArrayList<String[]> data){
+        for (String[] item: data){
+            String ucid = item[0];
+            String max = item[1];
+            String period = item[2];
+            // insert to db
+        }
+    }
+
+    public void loadUser(ArrayList<String[]> data){
+        
+    }
+
+    public void loadCarCategory(ArrayList<String[]> data){
+        
+    }
+
+    public void loadRent(ArrayList<String[]> data){
+
+    }
+
+    public void loadCar(ArrayList<String[]> data){
+        
+    }
+
+    
+
 }
 
 // userCategory (ucid, max, period)
@@ -380,3 +427,4 @@ public class Admin {
 // copy (callnum, copynum)
 // rent (uid, callnum, copynum, checkout, return)
 // produce (cname, callnum)
+

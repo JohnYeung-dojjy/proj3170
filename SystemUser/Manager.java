@@ -223,7 +223,7 @@ public class Manager {
             util_d2 = sdfrmt.parse(d2); // check if d2 is in correct format, if not, ParseException is thrown
             // d2_ok = true;   // break the loop
         }catch (ParseException e){
-            System.out.println(d1+" is Invalid Date format! Exiting operation...");
+            System.out.println(d2+" is Invalid Date format! Exiting operation...");
             return;
         }
 

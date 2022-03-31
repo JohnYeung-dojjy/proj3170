@@ -147,11 +147,12 @@ public class Admin {
                 "FOREIGN KEY (callnum) REFERENCES car(callnum) ON DELETE CASCADE" +
                 ")";	     
                 stmt.executeUpdate(produceQ);
+            System.out.println("Done. Database is initialized.");
         }
         catch (SQLException e){
             System.out.println(e);
         }
-        System.out.println("Done. Database is initialized.");
+        
     } 
     
 
@@ -171,11 +172,12 @@ public class Admin {
             
             //Run Query
             stmt.executeUpdate(deleteTableQuery);
+            System.out.println("Done. Database is removed.");
         }
         catch (SQLException e){
             System.out.println(e);
         } 
-        System.out.println("Done. Database is removed.");
+        
         
     }
 
@@ -374,47 +376,47 @@ public class Admin {
     }
 
     // see example at the bottom to loop over the returned ArrayList https://www.w3schools.com/java/java_arraylist.asp
-    public ArrayList<String[]> readDataFile(String fileName) throws FileNotFoundException{
+    // public ArrayList<String[]> readDataFile(String fileName) throws FileNotFoundException{
         
-        File DataFile = new File(fileName+".txt");
-        Scanner fileReader = new Scanner(DataFile);
-        ArrayList<String[]> data = new ArrayList<String[]>();
-        while (fileReader.hasNextLine()) {
-            String fileData = fileReader.nextLine();
-            //System.out.println(data);
-            String[] lineItems = fileData.split("\t");
-            data.add(lineItems);
-        }
-        fileReader.close();
+    //     File DataFile = new File(fileName+".txt");
+    //     Scanner fileReader = new Scanner(DataFile);
+    //     ArrayList<String[]> data = new ArrayList<String[]>();
+    //     while (fileReader.hasNextLine()) {
+    //         String fileData = fileReader.nextLine();
+    //         //System.out.println(data);
+    //         String[] lineItems = fileData.split("\t");
+    //         data.add(lineItems);
+    //     }
+    //     fileReader.close();
 
-        return data;
+    //     return data;
         
-    }
+    // }
 
-    public void loadUserCategory(ArrayList<String[]> data){
-        for (String[] item: data){
-            String ucid = item[0];
-            String max = item[1];
-            String period = item[2];
-            // insert to db
-        }
-    }
+    // public void loadUserCategory(ArrayList<String[]> data){
+    //     for (String[] item: data){
+    //         String ucid = item[0];
+    //         String max = item[1];
+    //         String period = item[2];
+    //         // insert to db
+    //     }
+    // }
 
-    public void loadUser(ArrayList<String[]> data){
+    // public void loadUser(ArrayList<String[]> data){
         
-    }
+    // }
 
-    public void loadCarCategory(ArrayList<String[]> data){
+    // public void loadCarCategory(ArrayList<String[]> data){
         
-    }
+    // }
 
-    public void loadRent(ArrayList<String[]> data){
+    // public void loadRent(ArrayList<String[]> data){
 
-    }
+    // }
 
-    public void loadCar(ArrayList<String[]> data){
+    // public void loadCar(ArrayList<String[]> data){
         
-    }
+    // }
 
     
 

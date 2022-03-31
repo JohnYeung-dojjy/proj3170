@@ -140,11 +140,11 @@ public class Admin {
                 ")";	     
                 stmt.executeUpdate(produceQ);
             String copyQ="CREATE TABLE IF NOT EXISTS copy(" +
-                "callnum VARCHAR(8) NOT NULL," +
-                "copynum INT(1) NOT NULL," +
-                "PRIMARY KEY (callnum, copynum)," +
-                "FOREIGN KEY (copynum) REFERENCES rent(copynum) ON DELETE CASCADE," +
-                "FOREIGN KEY (callnum) REFERENCES car(callnum) ON DELETE CASCADE" +
+                "callnum VARCHAR(8) NOT NULL, " +
+                "copynum INT(1) NOT NULL, " +
+                "PRIMARY KEY (callnum, copynum), " + 
+                "FOREIGN KEY (callnum) REFERENCES car(callnum) ON DELETE CASCADE, " +
+                "FOREIGN KEY (copynum) REFERENCES rent(copynum) ON DELETE CASCADE" +
                 ")";	     
                 stmt.executeUpdate(copyQ);
             System.out.println("Done. Database is initialized.");
@@ -231,7 +231,7 @@ public class Admin {
                         //     // System.out.println(lineItems);
                         // }
                         String loadUserQ="LOAD DATA INFILE '"+
-                                        "./"+path+"/"+
+                                        "/"+path+"/"+
                                         "user.txt' INTO TABLE user;";	 
                         System.out.println(loadUserQ); 
                         stmt.executeUpdate(loadUserQ);
@@ -247,8 +247,8 @@ public class Admin {
                         //     // System.out.println(lineItems);
                         // }
                         String loadUserCategoryQ="LOAD DATA INFILE '"+
-                                                "./"+path+"/"+
-                                                "user_category.txt' INTO TABLE user_category;";	 
+                                                 "/"+path+"/"+
+                                                 "user_category.txt' INTO TABLE user_category;";	 
                         System.out.println(loadUserCategoryQ);	     
                         stmt.executeUpdate(loadUserCategoryQ);
             
@@ -274,8 +274,9 @@ public class Admin {
                         //     // System.out.println(lineItems);
                         // }
                         String loadCarCategoryQ="LOAD DATA INFILE '"+
-                                                "./"+path+"/"+
+                                                "/"+path+"/"+
                                                 "car_category.txt' INTO TABLE car_category;";     
+                        System.out.println(loadCarCategoryQ);
                         stmt.executeUpdate(loadCarCategoryQ);
                     }
                     else if ( file.getName().equals("rent.txt") ){

@@ -87,7 +87,7 @@ public class Admin {
             //SQL Query
             //userCategory
             //ok
-            String userCategoryQ="CREATE TABLE user_category(" +
+            String userCategoryQ="CREATE TABLE IF NOT EXISTS user_category(" +
                     "ucid INT(1) NOT NULL," +
                     "max INT(1)  NOT NULL," +
                     "period INT(2) NOT NULL," + 
@@ -95,7 +95,7 @@ public class Admin {
                     ")";	     
                 stmt.executeUpdate(userCategoryQ);
             //
-            String userQ="CREATE TABLE user(" +
+            String userQ="CREATE TABLE IF NOT EXISTS user(" +
                 "uid VARCHAR(12) NOT NULL, " +
                 "name VARCHAR(25) NOT NULL, " +
                 "age INT(2) NOT NULL, " + 
@@ -105,13 +105,13 @@ public class Admin {
                 "FOREIGN KEY (ucid) REFERENCES user_category(ucid) ON DELETE CASCADE" +
                 ")";	     
                 stmt.executeUpdate(userQ);
-            String carCategoryQ="CREATE TABLE car_category(" +
+            String carCategoryQ="CREATE TABLE IF NOT EXISTS car_category(" +
                 "ccid INT(1) NOT NULL," +
                 "ccname VARCHAR(20) NOT NULL," +
                 "PRIMARY KEY (ccid)" + 
                 ")";	     
                 stmt.executeUpdate(carCategoryQ);
-            String carQ="CREATE TABLE car(" +
+            String carQ="CREATE TABLE IF NOT EXISTS car(" +
                 "callnum VARCHAR(8) NOT NULL, " +
                 "name VARCHAR(10) NOT NULL, " +
                 "manufacture DATE NOT NULL, " + 
@@ -121,15 +121,7 @@ public class Admin {
                 "FOREIGN KEY (ccid) REFERENCES car_category(ccid) ON DELETE CASCADE" +
                 ")";	     
                 stmt.executeUpdate(carQ);
-            String copyQ="CREATE TABLE copy(" +
-                "callnum VARCHAR(8) NOT NULL," +
-                "copynum INT(1) NOT NULL," +
-                "PRIMARY KEY(callnum, copynum)," +
-                "FOREIGN KEY (copynum) REFERENCES rent(copynum) ON DELETE CASCADE," +
-                "FOREIGN KEY (callnum) REFERENCES car(callnum) ON DELETE CASCADE" +
-                ")";	     
-                stmt.executeUpdate(copyQ);
-            String rentQ="CREATE TABLE rent(" +
+            String rentQ="CREATE TABLE IF NOT EXISTS rent(" +
                 "callnum VARCHAR(8) NOT NULL, " +
                 "copynum INT(1) NOT NULL, " +
                 "uid VARCHAR(12) NOT NULL, " +
@@ -140,13 +132,21 @@ public class Admin {
                 "FOREIGN KEY (callnum) REFERENCES car(callnum) ON DELETE CASCADE" +
                 ")";	     
                 stmt.executeUpdate(rentQ);
-            String produceQ="CREATE TABLE produce(" +
+            String produceQ="CREATE TABLE IF NOT EXISTS produce(" +
                 "cname VARCHAR(25) NOT NULL, " +
                 "callnum VARCHAR(8) NOT NULL, " +
                 "PRIMARY KEY (cname, callnum), " + 
                 "FOREIGN KEY (callnum) REFERENCES car(callnum) ON DELETE CASCADE" +
                 ")";	     
                 stmt.executeUpdate(produceQ);
+            String copyQ="CREATE TABLE IF NOT EXISTS copy(" +
+                "callnum VARCHAR(8) NOT NULL," +
+                "copynum INT(1) NOT NULL," +
+                "PRIMARY KEY(callnum, copynum)," +
+                "FOREIGN KEY (copynum) REFERENCES rent(copynum) ON DELETE CASCADE," +
+                "FOREIGN KEY (callnum) REFERENCES car(callnum) ON DELETE CASCADE" +
+                ")";	     
+                stmt.executeUpdate(copyQ);
             System.out.println("Done. Database is initialized.");
         }
         catch (SQLException e){

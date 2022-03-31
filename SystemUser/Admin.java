@@ -126,7 +126,7 @@ public class Admin {
                 "copynum INT(1) NOT NULL, " +
                 "uid VARCHAR(12) NOT NULL, " +
                 "checkout DATE NOT NULL, " +
-                "return DATE ," +
+                "`return` DATE ," +
                 "PRIMARY KEY (uid, callnum, copynum, checkout)," + 
                 "FOREIGN KEY (uid) REFERENCES user(uid) ON DELETE CASCADE," +
                 "FOREIGN KEY (callnum) REFERENCES car(callnum) ON DELETE CASCADE" +

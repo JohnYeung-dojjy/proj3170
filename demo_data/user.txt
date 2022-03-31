@@ -1,0 +1,3 @@
+ss1155143743	Chan Tai Man	26	Student	1
+ss1155153720	Chau Yan Yee	19	Student	2
+ss1155143988	Chan Tai Man	50	Teacher	3

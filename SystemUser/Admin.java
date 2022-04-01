@@ -87,7 +87,7 @@ public class Admin {
             //SQL Query
             //userCategory
             //ok
-            String userCategoryQ="CREATE TABLE user_category(" +
+            String userCategoryQ="CREATE TABLE IF NOT EXISTS user_category(" +
                     "ucid INT(1) NOT NULL," +
                     "max INT(1)  NOT NULL," +
                     "period INT(2) NOT NULL," + 
@@ -95,7 +95,7 @@ public class Admin {
                     ")";	     
                 stmt.executeUpdate(userCategoryQ);
             //
-            String userQ="CREATE TABLE user(" +
+            String userQ="CREATE TABLE IF NOT EXISTS user(" +
                 "uid VARCHAR(12) NOT NULL, " +
                 "name VARCHAR(25) NOT NULL, " +
                 "age INT(2) NOT NULL, " + 
@@ -105,13 +105,13 @@ public class Admin {
                 "FOREIGN KEY (ucid) REFERENCES user_category(ucid) ON DELETE CASCADE" +
                 ")";	     
                 stmt.executeUpdate(userQ);
-            String carCategoryQ="CREATE TABLE car_category(" +
+            String carCategoryQ="CREATE TABLE IF NOT EXISTS car_category(" +
                 "ccid INT(1) NOT NULL," +
                 "ccname VARCHAR(20) NOT NULL," +
                 "PRIMARY KEY (ccid)" + 
                 ")";	     
                 stmt.executeUpdate(carCategoryQ);
-            String carQ="CREATE TABLE car(" +
+            String carQ="CREATE TABLE IF NOT EXISTS car(" +
                 "callnum VARCHAR(8) NOT NULL, " +
                 "name VARCHAR(10) NOT NULL, " +
                 "manufacture DATE NOT NULL, " + 
@@ -121,37 +121,40 @@ public class Admin {
                 "FOREIGN KEY (ccid) REFERENCES car_category(ccid) ON DELETE CASCADE" +
                 ")";	     
                 stmt.executeUpdate(carQ);
-            String copyQ="CREATE TABLE copy(" +
-                "callnum VARCHAR(8) NOT NULL," +
-                "copynum INT(1) NOT NULL," +
-                "PRIMARY KEY(callnum, copynum)," +
-                "FOREIGN KEY (copynum) REFERENCES rent(copynum) ON DELETE CASCADE," +
-                "FOREIGN KEY (callnum) REFERENCES car(callnum) ON DELETE CASCADE" +
+            String copyQ="CREATE TABLE IF NOT EXISTS copy(" +
+                "callnum VARCHAR(8) NOT NULL, " +
+                "copynum INT(1) NOT NULL, " +
+                "PRIMARY KEY (callnum, copynum) " + 
+                // "PRIMARY KEY (callnum, copynum), " + 
+                // "FOREIGN KEY (callnum) REFERENCES car(callnum) ON DELETE CASCADE, " +
+                // "FOREIGN KEY (copynum) REFERENCES rent(copynum) ON DELETE CASCADE" +
                 ")";	     
                 stmt.executeUpdate(copyQ);
-            String rentQ="CREATE TABLE rent(" +
+            String rentQ="CREATE TABLE IF NOT EXISTS rent(" +
                 "callnum VARCHAR(8) NOT NULL, " +
                 "copynum INT(1) NOT NULL, " +
                 "uid VARCHAR(12) NOT NULL, " +
                 "checkout DATE NOT NULL, " +
-                "return DATE ," +
+                "`return` DATE ," +
                 "PRIMARY KEY (uid, callnum, copynum, checkout)," + 
                 "FOREIGN KEY (uid) REFERENCES user(uid) ON DELETE CASCADE," +
                 "FOREIGN KEY (callnum) REFERENCES car(callnum) ON DELETE CASCADE" +
                 ")";	     
                 stmt.executeUpdate(rentQ);
-            String produceQ="CREATE TABLE produce(" +
+            String produceQ="CREATE TABLE IF NOT EXISTS produce(" +
                 "cname VARCHAR(25) NOT NULL, " +
                 "callnum VARCHAR(8) NOT NULL, " +
                 "PRIMARY KEY (cname, callnum), " + 
                 "FOREIGN KEY (callnum) REFERENCES car(callnum) ON DELETE CASCADE" +
                 ")";	     
                 stmt.executeUpdate(produceQ);
+            
+            System.out.println("Done. Database is initialized.");
         }
         catch (SQLException e){
             System.out.println(e);
         }
-        System.out.println("Done. Database is initialized.");
+        
     } 
     
 
@@ -161,6 +164,7 @@ public class Admin {
             //initialize Statement
             Statement stmt=con.createStatement();
             //SQL Query
+            stmt.executeUpdate("SET foreign_key_checks = 0");
             String deleteTableQuery="DROP TABLE IF EXISTS user_category, " +
                                     "user, " +
                                     "car_category, " +
@@ -171,11 +175,13 @@ public class Admin {
             
             //Run Query
             stmt.executeUpdate(deleteTableQuery);
+            stmt.executeUpdate("SET foreign_key_checks = 1");
+            System.out.println("Done. Database is removed.");
         }
         catch (SQLException e){
             System.out.println(e);
         } 
-        System.out.println("Done. Database is removed.");
+        
         
     }
 
@@ -227,7 +233,7 @@ public class Admin {
                         //     // System.out.println(lineItems);
                         // }
                         String loadUserQ="LOAD DATA INFILE '"+
-                                        "./"+path+"/"+
+                                        "/"+path+"/"+
                                         "user.txt' INTO TABLE user;";	 
                         System.out.println(loadUserQ); 
                         stmt.executeUpdate(loadUserQ);
@@ -243,8 +249,8 @@ public class Admin {
                         //     // System.out.println(lineItems);
                         // }
                         String loadUserCategoryQ="LOAD DATA INFILE '"+
-                                                "./"+path+"/"+
-                                                "user_category.txt' INTO TABLE user_category;";	 
+                                                 "/"+path+"/"+
+                                                 "user_category.txt' INTO TABLE user_category;";	 
                         System.out.println(loadUserCategoryQ);	     
                         stmt.executeUpdate(loadUserCategoryQ);
             
@@ -270,8 +276,9 @@ public class Admin {
                         //     // System.out.println(lineItems);
                         // }
                         String loadCarCategoryQ="LOAD DATA INFILE '"+
-                                                "./"+path+"/"+
+                                                "/"+path+"/"+
                                                 "car_category.txt' INTO TABLE car_category;";     
+                        System.out.println(loadCarCategoryQ);
                         stmt.executeUpdate(loadCarCategoryQ);
                     }
                     else if ( file.getName().equals("rent.txt") ){
@@ -374,47 +381,47 @@ public class Admin {
     }
 
     // see example at the bottom to loop over the returned ArrayList https://www.w3schools.com/java/java_arraylist.asp
-    public ArrayList<String[]> readDataFile(String fileName) throws FileNotFoundException{
+    // public ArrayList<String[]> readDataFile(String fileName) throws FileNotFoundException{
         
-        File DataFile = new File(fileName+".txt");
-        Scanner fileReader = new Scanner(DataFile);
-        ArrayList<String[]> data = new ArrayList<String[]>();
-        while (fileReader.hasNextLine()) {
-            String fileData = fileReader.nextLine();
-            //System.out.println(data);
-            String[] lineItems = fileData.split("\t");
-            data.add(lineItems);
-        }
-        fileReader.close();
+    //     File DataFile = new File(fileName+".txt");
+    //     Scanner fileReader = new Scanner(DataFile);
+    //     ArrayList<String[]> data = new ArrayList<String[]>();
+    //     while (fileReader.hasNextLine()) {
+    //         String fileData = fileReader.nextLine();
+    //         //System.out.println(data);
+    //         String[] lineItems = fileData.split("\t");
+    //         data.add(lineItems);
+    //     }
+    //     fileReader.close();
 
-        return data;
+    //     return data;
         
-    }
+    // }
 
-    public void loadUserCategory(ArrayList<String[]> data){
-        for (String[] item: data){
-            String ucid = item[0];
-            String max = item[1];
-            String period = item[2];
-            // insert to db
-        }
-    }
+    // public void loadUserCategory(ArrayList<String[]> data){
+    //     for (String[] item: data){
+    //         String ucid = item[0];
+    //         String max = item[1];
+    //         String period = item[2];
+    //         // insert to db
+    //     }
+    // }
 
-    public void loadUser(ArrayList<String[]> data){
+    // public void loadUser(ArrayList<String[]> data){
         
-    }
+    // }
 
-    public void loadCarCategory(ArrayList<String[]> data){
+    // public void loadCarCategory(ArrayList<String[]> data){
         
-    }
+    // }
 
-    public void loadRent(ArrayList<String[]> data){
+    // public void loadRent(ArrayList<String[]> data){
 
-    }
+    // }
 
-    public void loadCar(ArrayList<String[]> data){
+    // public void loadCar(ArrayList<String[]> data){
         
-    }
+    // }
 
     
 

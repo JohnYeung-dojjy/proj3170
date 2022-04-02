@@ -133,7 +133,7 @@ private void SearchForCarsCallnum() throws SQLException{
         pstmtSub.setString(1, userinputnum);
         ResultSet resultSetsub1 = pstmtSub.executeQuery();
 
-        String[][] occupiedCarNo = new String[100][100];
+        String[][] occupiedCarNo = new String[100][3];
         int i;
         int j = 0;
         while (resultSetsub1.next()){
@@ -207,7 +207,7 @@ private void SearchForCarsCallnum() throws SQLException{
                 PreparedStatement pstmtSub = con.prepareStatement(psqlSub);
                 pstmtSub.setString(1, "%" + userinputcarname + "%");
                 ResultSet resultSetsub1 = pstmtSub.executeQuery();
-                String[][] occupiedCarNo = new String[100][100];
+                String[][] occupiedCarNo = new String[100][3];
                 int i;
                 int j = 0;
         while (resultSetsub1.next()){
@@ -276,7 +276,7 @@ private void SearchForCarsCallnum() throws SQLException{
         pstmtSub.setString(1, "%" + userinputcompany +"%");
         ResultSet resultSetsub1 = pstmtSub.executeQuery();
         
-        String[][] occupiedCarNo = new String[100][100];
+        String[][] occupiedCarNo = new String[100][3];
         int i;
         int j = 0;
         while (resultSetsub1.next()){

@@ -1,16 +1,15 @@
 package SystemUser;
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner; // class for user input
 import java.util.Set;
-import java.io.BufferedReader;
 import java.io.File;  
-import java.io.FileNotFoundException;
-import java.io.FileReader;  
-import java.util.ArrayList;
+
 
 public class Admin {
     // public static void main(String[] args)
@@ -283,20 +282,25 @@ public class Admin {
                     }
                     else if ( file.getName().equals("rent.txt") ){
                         System.out.println("E");
-                        while (lineReader.hasNextLine()) {
-                            String line = lineReader.nextLine();
-                            // System.out.println(line);
-                            String[] lineItems = line.split("\t"); 
-                            rentData.add(lineItems); 
-                            // System.out.println(lineItems);
-                        }
-                        for (int i=0; i<2; i++){
-                            String[] pt = rentData.get(i);
-                            for(String pp : pt){
-                                System.out.print(pp);
-                            }
-                            System.out.println(" A");
-                        }
+                        String loadRentQ="LOAD DATA INFILE '"+
+                                                "/"+path+"/"+
+                                                "rent.txt' INTO TABLE car_category;";     
+                        System.out.println(loadRentQ);
+                        stmt.executeUpdate(loadRentQ);
+                        // while (lineReader.hasNextLine()) {
+                        //     String line = lineReader.nextLine();
+                        //     // System.out.println(line);
+                        //     String[] lineItems = line.split("\t"); 
+                        //     rentData.add(lineItems); 
+                        //     // System.out.println(lineItems);
+                        // }
+                        // for (int i=0; i<2; i++){
+                        //     String[] pt = rentData.get(i);
+                        //     for(String pp : pt){
+                        //         System.out.print(pp);
+                        //     }
+                        //     System.out.println(" A");
+                        // }
                     }
                     lineReader.close();
                 } 
@@ -309,8 +313,68 @@ public class Admin {
             
         //Write to database for car.txt and rent.txt
         try{
+            // String carInsert = "INSERT INTO car VALUES (?,?,?,?,?)";
+            // PreparedStatement carPS = con.prepareStatement(carInsert);
+            // String rentInsert = "INSERT INTO rent (callnum, copynum, uid, checkout, `return`) " +
+            //                     "VALUES (?,?,?,?,?)";
+            // PreparedStatement rentPS = con.prepareStatement(rentInsert);
+            // String copyInsert = "INSERT INTO copy VALUES (?,?)";
+            // PreparedStatement copyPS = con.prepareStatement(copyInsert);
+            // String produceInsert = "INSERT INTO produce VALUES (?,?)";
+            // PreparedStatement producePS = con.prepareStatement(produceInsert); 
+            //backup
+            String carInsert = "INSERT INTO car (callnum, name, manufacture, time_rent, ccid) VALUES (?,?,?,?,?)";
+            PreparedStatement carPS = con.prepareStatement(carInsert);
+            String rentInsert = "INSERT INTO rent (callnum, copynum, uid, checkout, `return`) VALUES (?,?,?,?,?)";
+            PreparedStatement rentPS = con.prepareStatement(rentInsert);
+            String copyInsert = "INSERT INTO copy (callnum, copynum) VALUES (?,?)";
+            PreparedStatement copyPS = con.prepareStatement(copyInsert);
+            String produceInsert = "INSERT INTO produce (cname, callnum) VALUES (?,?)";
+            PreparedStatement producePS = con.prepareStatement(produceInsert);                          
+            //backup
+            //car.txt -> Copy/Produce/Car
+            String callnum=null, name=null, companyName=null, manufactureDate =null;
+            int numOfCopies = 0, time_rent = 0, ccid = 0;
             
+            System.out.println("Car Data size: "+carData.size());
+            for (int i = 0; i < carData.size(); i++){
+                String[] pt = rentData.get(i);
+                for(int j = 0; j < pt.length; j++){
+                    if (j == 0)
+                        callnum = pt[j];
+                    if (j == 1)
+                        numOfCopies = Integer.parseInt(pt[j]);
+                    if (j == 2)
+                        name = pt[j];
+                    if (j == 3)
+                        companyName = pt[j];
+                    if (j == 4)
+                        manufactureDate = pt[j];
+                    if (j == 5)
+                        time_rent = Integer.parseInt(pt[j]);
+                    if (j == 6)
+                        ccid = Integer.parseInt(pt[j]);
+                }
+                System.out.println("-A-");
+                carPS.setString(1,callnum);
+                carPS.setString(2, name);
+                carPS.setDate(3, Date.valueOf(manufactureDate));
+                carPS.setInt(4, time_rent);
+                carPS.setInt(5, ccid);
+
+                carPS.executeUpdate();
+                copyPS.setString(1, callnum);
+                copyPS.setInt(2, numOfCopies);
+                copyPS.executeUpdate();
                 
+                producePS.setString(1, companyName);
+                producePS.setString(2, callnum);
+                
+                producePS.executeUpdate();
+
+            } 
+            // String uid, rentDate,returnDate;
+            // int copyID;
         }   
         catch (Exception e) {
             System.out.println("An error occurred.");
@@ -323,7 +387,20 @@ public class Admin {
         pathReader.close();
 
     }
-
+    // ArrayList<String[]> rentData = new ArrayList<>();
+    // String[] a = {"pl","ut","o"};
+    // rentData.add(a);
+    // String[] aa = {"pl","at","o"};
+    // rentData.add(aa);
+    // String[] aaa = {"p","lat","o"};
+    // rentData.add(aaa);
+    //    for (int i=0; i<rentData.size(); i++){
+    //         String[] pt = rentData.get(i);
+    //         for(int j=0; j<pt.length; j++){
+    //            System.out.println(pt[j]);
+    //         }
+    //         System.out.println(" A");
+    //     } 
     private void ShowRecordNumber(){
         System.out.println("Number of records in each table:");
         String[] tableNames = {"user_category", "user", "car_category", "car", "copy", "produce", "rent" };

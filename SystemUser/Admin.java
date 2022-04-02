@@ -361,8 +361,8 @@ public class Admin {
                 carPS.setDate(3, Date.valueOf(manufactureDate));
                 carPS.setInt(4, time_rent);
                 carPS.setInt(5, ccid);
-
                 carPS.executeUpdate();
+                
                 copyPS.setString(1, callnum);
                 copyPS.setInt(2, numOfCopies);
                 copyPS.executeUpdate();

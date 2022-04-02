@@ -27,6 +27,7 @@ public class Main {
                 
             } catch (ClassNotFoundException e) {
                 System.out.println("[Error]: Java MySQL DB Driver not found");
+                System.out.println(e);
                 System.exit(0);
             } 
             catch (SQLException ex) {

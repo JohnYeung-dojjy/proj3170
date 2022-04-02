@@ -227,11 +227,16 @@ public class Manager {
             return;
         }
 
+        if (util_d2.getTime() < util_d1.getTime()){
+            System.out.println("ending date cannot be before starting date");
+            return;
+        }
+
             
         try{
             
             // select rent records where cars hasn't been returned, and was rented between the range
-            st = con.prepareStatement("SELECT * FROM rent WHERE return=NULL AND `checkout` BETWEEN ? and ? ORDER BY checkout ASC");
+            st = con.prepareStatement("SELECT * FROM rent WHERE `return`=NULL AND `checkout` BETWEEN ? and ? ORDER BY checkout DESC");
             Date sql_d1 = new Date(util_d1.getTime()); // change date from input format into sql format
             Date sql_d2 = new Date(util_d2.getTime()); // change date from input format into sql format
             st.setDate(1, sql_d1);  // set first  ? in st to sql_d1

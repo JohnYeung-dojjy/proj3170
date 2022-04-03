@@ -114,7 +114,7 @@ public class Admin {
                 "callnum VARCHAR(8) NOT NULL, " +
                 "name VARCHAR(10) NOT NULL, " +
                 "manufacture DATE NOT NULL, " + 
-                "time_rent DATE NOT NULL, " +
+                "time_rent INT(2) NOT NULL, " +
                 "ccid INT(1) NOT NULL, " +
                 "PRIMARY KEY(callnum), " +
                 "FOREIGN KEY (ccid) REFERENCES car_category(ccid) ON DELETE CASCADE" +
@@ -338,7 +338,7 @@ public class Admin {
             
             System.out.println("Car Data size: "+carData.size());
             for (int i = 0; i < carData.size(); i++){
-                String[] pt = rentData.get(i);
+                String[] pt = carData.get(i);
                 for(int j = 0; j < pt.length; j++){
                     if (j == 0)
                         callnum = pt[j];
@@ -362,7 +362,7 @@ public class Admin {
                 carPS.setInt(4, time_rent);
                 carPS.setInt(5, ccid);
                 carPS.executeUpdate();
-                
+
                 copyPS.setString(1, callnum);
                 copyPS.setInt(2, numOfCopies);
                 copyPS.executeUpdate();

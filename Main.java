@@ -11,7 +11,7 @@ import SystemUser.*;
 public class Main {
     private static Scanner input_scanner = new Scanner(System.in);
     private static Set<String> ops = Set.of("1","2","3","4");
-    public static void main(String[] args)
+    public static void main(String[] args) throws SQLException
     {
         String dbAddress = "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/db12";
         String dbUsername = "Group12";

@@ -195,10 +195,10 @@ public class Admin {
             File dirPath = new File("./"+path+"/");
             //List of all files and directories
             ArrayList<String[]> carData = new ArrayList<>();
-            ArrayList<String[]> carcatData = new ArrayList<>();
+            // ArrayList<String[]> carcatData = new ArrayList<>();
             // ArrayList<String[]> userData = new ArrayList<>();
             // ArrayList<String[]> usercatData = new ArrayList<>();
-            ArrayList<String[]> rentData = new ArrayList<>();
+            // ArrayList<String[]> rentData = new ArrayList<>();
             
            
                 File filesList[] = dirPath.listFiles();
@@ -210,13 +210,13 @@ public class Admin {
                 }
             
             
-            System.out.println("List of files and directories in the specified directory:");
+            // System.out.println("List of files and directories in the specified directory:");
             
             for(File file : filesList) {
-                System.out.println("File name: "+file.getName());
-                System.out.println("File path: "+file.getAbsolutePath());
-                System.out.println("Size :"+file.getTotalSpace());
-                System.out.println("");
+                // System.out.println("File name: "+file.getName());
+                // System.out.println("File path: "+file.getAbsolutePath());
+                // System.out.println("Size :"+file.getTotalSpace());
+                // System.out.println("");
                 try{
                     Statement stmt=con.createStatement();
                     File inputFile = new File(path+"/"+file.getName());
@@ -235,13 +235,13 @@ public class Admin {
                         String loadUserQ="LOAD DATA LOCAL INFILE '"+
                                         path+"/"+file.getName()+
                                         "' INTO TABLE user;";	 
-                        System.out.println(loadUserQ); 
+                        // System.out.println(loadUserQ); 
                         stmt.executeUpdate(loadUserQ);
                         stmt.executeUpdate("SET foreign_key_checks = 1");
                     }
                     else if ( file.getName().equals("user_category.txt") ){
                         //direct read user_category
-                        System.out.println("B");
+                        // System.out.println("B");
                         // while (lineReader.hasNextLine()){
                         //     String line = lineReader.nextLine();
                         //     // System.out.println(line);
@@ -252,12 +252,12 @@ public class Admin {
                         String loadUserCategoryQ="LOAD DATA LOCAL INFILE '"+
                                                  path+"/"+
                                                  "user_category.txt' INTO TABLE user_category;";	 
-                        System.out.println(loadUserCategoryQ);	     
+                        // System.out.println(loadUserCategoryQ);	     
                         stmt.executeUpdate(loadUserCategoryQ);
             
                     }
                     else if ( file.getName().equals("car.txt") ){
-                        System.out.println("C");
+                        // System.out.println("C");
                         while (lineReader.hasNextLine()) {
                             String line = lineReader.nextLine();
                             // System.out.println(line);
@@ -267,44 +267,64 @@ public class Admin {
                         }
                     }
                     else if ( file.getName().equals("car_category.txt") ){
-                        System.out.println("D");
+                        // System.out.println("D");
                         //direct read car_category
-                        while (lineReader.hasNextLine()) {
-                            String line = lineReader.nextLine();
-                            System.out.println(line);
-                            String[] lineItems = line.split("\t"); 
-                            carcatData.add(lineItems); 
-                            System.out.println(lineItems);
-                        }
+                        // while (lineReader.hasNextLine()) {
+                        //     String line = lineReader.nextLine();
+                        //     System.out.println(line);
+                        //     String[] lineItems = line.split("\t"); 
+                        //     carcatData.add(lineItems); 
+                        //     System.out.println(lineItems);
+                        // }
+                        // //carcat
+                        // String carcatInsert = "INSERT INTO car_category (ccid, ccname) VALUES (?,?)";
+                        // PreparedStatement carcatPS = con.prepareStatement(carcatInsert);
+                        // String ccname=null; 
+                        // int ccid = 0;
+                        // for (int i = 0; i < carcatData.size(); i++){
+                        //     String[] pt = carcatData.get(i);
+                        //     for(int j = 0; j < pt.length; j++){
+                        //         if (j == 0)
+                        //             ccid = Integer.parseInt(pt[j]);
+                        //         if (j == 1)
+                        //             ccname = pt[j];
+                        //         System.out.println("-B-:"+ccid);
+                        //         System.out.println("-B-:"+ccname);
+                        //     }
+                        //     System.out.println("-B-");
+                        //     carcatPS.setInt(1,ccid);
+                        //     carcatPS.setString(2, ccname);
+                        //     carcatPS.executeUpdate();
+                        // } 
                         String loadCarCategoryQ="LOAD DATA LOCAL INFILE '"+
                                                 path+"/"+
                                                 "car_category.txt' INTO TABLE car_category;";     
-                        System.out.println(loadCarCategoryQ);
+                        // System.out.println(loadCarCategoryQ);
                         stmt.executeUpdate(loadCarCategoryQ);
                     }
                     else if ( file.getName().equals("rent.txt") ){
-                        System.out.println("E");
+                        // System.out.println("E");
                         stmt.executeUpdate("SET foreign_key_checks = 0");
                         String loadRentQ="LOAD DATA LOCAL INFILE '"+
                                                 path+"/"+
-                                                "rent.txt' INTO TABLE car_category;";     
-                        System.out.println(loadRentQ);
+                                                "rent.txt' INTO TABLE rent;";     
+                        // System.out.println(loadRentQ);
                         stmt.executeUpdate(loadRentQ);
                         stmt.executeUpdate("SET foreign_key_checks = 1");
-                        while (lineReader.hasNextLine()) {
-                            String line = lineReader.nextLine();
-                            // System.out.println(line);
-                            String[] lineItems = line.split("\t"); 
-                            rentData.add(lineItems); 
-                            // System.out.println(lineItems);
-                        }
-                        for (int i=0; i<2; i++){
-                            String[] pt = rentData.get(i);
-                            for(String pp : pt){
-                                System.out.print(pp);
-                            }
-                            System.out.println("Rent\n");
-                        }
+                        // while (lineReader.hasNextLine()) {
+                        //     String line = lineReader.nextLine();
+                        //     // System.out.println(line);
+                        //     String[] lineItems = line.split("\t"); 
+                        //     rentData.add(lineItems); 
+                        //     // System.out.println(lineItems);
+                        // }
+                        // for (int i=0; i<2; i++){
+                        //     String[] pt = rentData.get(i);
+                        //     for(String pp : pt){
+                        //         System.out.print(pp);
+                        //     }
+                        //     // System.out.println("Rent\n");
+                        // }
                     }
                     lineReader.close();
                 } 
@@ -327,6 +347,7 @@ public class Admin {
             // String produceInsert = "INSERT INTO produce VALUES (?,?)";
             // PreparedStatement producePS = con.prepareStatement(produceInsert); 
             //backup
+            
             String carInsert = "INSERT INTO car (callnum, name, manufacture, time_rent, ccid) VALUES (?,?,?,?,?)";
             PreparedStatement carPS = con.prepareStatement(carInsert);
             // String rentInsert = "INSERT INTO rent (callnum, copynum, uid, checkout, `return`) VALUES (?,?,?,?,?)";
@@ -340,7 +361,7 @@ public class Admin {
             String callnum=null, name=null, companyName=null, manufactureDate =null;
             int numOfCopies = 0, time_rent = 0, ccid = 0;
             
-            System.out.println("Car Data size: "+carData.size());
+            // System.out.println("Car Data size: "+carData.size());
             for (int i = 0; i < carData.size(); i++){
                 String[] pt = carData.get(i);
                 for(int j = 0; j < pt.length; j++){
@@ -359,7 +380,7 @@ public class Admin {
                     if (j == 6)
                         ccid = Integer.parseInt(pt[j]);
                 }
-                System.out.println("-A-");
+                // System.out.println("-A-");
                 carPS.setString(1,callnum);
                 carPS.setString(2, name);
                 carPS.setDate(3, Date.valueOf(manufactureDate));
@@ -377,7 +398,10 @@ public class Admin {
                 producePS.executeUpdate();
 
             } 
+            
+            //rent
             System.out.println("Done. Data is inputted to the database.");
+
             // String uid, rentDate,returnDate;
             // int copyID;
         }   

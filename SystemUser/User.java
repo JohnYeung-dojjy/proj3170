@@ -1,4 +1,3 @@
-package SystemUser;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -9,13 +8,13 @@ import java.sql.Statement;
 import java.util.Scanner;
 import java.util.Set;
 
-public class User {
+public class User2 {
     private Set<String> ops = Set.of("1","2","3");
     private Connection con;
     //private Scanner input_scanner = new Scanner(System.in);  
     public Scanner input_scanner = new Scanner(System.in);  
     private String operation; 
-    public User(Connection connection){
+    public User2(Connection connection){
         con = connection;
     }
     
@@ -128,7 +127,7 @@ private void SearchForCarsCallnum() throws SQLException{
         String psqlSub ="SELECT car.callnum, COUNT(*)" +
         "FROM rent" +
         "LEFT JOIN car on rent.callnum = car.callnum" +
-        "WHERE rent.callnum = ? AND rent.creturn IS NULL" +
+        "WHERE rent.callnum = ? AND rent.return_date IS NULL" +
         "GROUP BY car.callnum ORDER BY car.callnum;";
         PreparedStatement pstmtSub = con.prepareStatement(psqlSub);
         pstmtSub.setString(1, userinputnum);
@@ -202,7 +201,7 @@ private void SearchForCarsCallnum() throws SQLException{
                 String psqlSub = "SELECT rent.callnum, COUNT(*)" +
                 "FROM rent" +
                 "LEFT JOIN car on rent.callnum = car.callnum" +
-                "WHERE car.name LIKE ? AND rent.creturn IS NULL" +
+                "WHERE car.name LIKE ? AND rent.return_date IS NULL" +
                 "GROUP BY car.name ORDER BY car.callnum;" ;
                 
                 PreparedStatement pstmtSub = con.prepareStatement(psqlSub);
@@ -270,7 +269,7 @@ private void SearchForCarsCallnum() throws SQLException{
         "FROM rent" +
         "LEFT JOIN car on rent.callnum = car.callnum" +
         "LEFT JOIN produce ON rent.callnum = produce.callnum" +
-        "WHERE produce.cname LIKE ? AND rent.creturn IS NULL" + 
+        "WHERE produce.cname LIKE ? AND rent.return_date IS NULL" + 
         "GROUP BY rent.callnum ORDER BY rent.callnum;";
 
         PreparedStatement pstmtSub = con.prepareStatement(psqlSub);

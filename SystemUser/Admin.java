@@ -339,7 +339,7 @@ public class Admin {
         try{
             // String carInsert = "INSERT INTO car VALUES (?,?,?,?,?)";
             // PreparedStatement carPS = con.prepareStatement(carInsert);
-            // String rentInsert = "INSERT INTO rent (callnum, copynum, uid, checkout, `return`) " +
+            // String rentInsert = "INSERT INTO rent (callnum, copynum, uid, checkout, return_date) " +
             //                     "VALUES (?,?,?,?,?)";
             // PreparedStatement rentPS = con.prepareStatement(rentInsert);
             // String copyInsert = "INSERT INTO copy VALUES (?,?)";
@@ -350,7 +350,7 @@ public class Admin {
             
             String carInsert = "INSERT INTO car (callnum, name, manufacture, time_rent, ccid) VALUES (?,?,?,?,?)";
             PreparedStatement carPS = con.prepareStatement(carInsert);
-            // String rentInsert = "INSERT INTO rent (callnum, copynum, uid, checkout, `return`) VALUES (?,?,?,?,?)";
+            // String rentInsert = "INSERT INTO rent (callnum, copynum, uid, checkout, return_date) VALUES (?,?,?,?,?)";
             // PreparedStatement rentPS = con.prepareStatement(rentInsert);
             String copyInsert = "INSERT INTO copy (callnum, copynum) VALUES (?,?)";
             PreparedStatement copyPS = con.prepareStatement(copyInsert);

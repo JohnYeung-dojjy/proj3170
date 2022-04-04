@@ -417,20 +417,7 @@ public class Admin {
         // pathReader.close();
 
     }
-    // ArrayList<String[]> rentData = new ArrayList<>();
-    // String[] a = {"pl","ut","o"};
-    // rentData.add(a);
-    // String[] aa = {"pl","at","o"};
-    // rentData.add(aa);
-    // String[] aaa = {"p","lat","o"};
-    // rentData.add(aaa);
-    //    for (int i=0; i<rentData.size(); i++){
-    //         String[] pt = rentData.get(i);
-    //         for(int j=0; j<pt.length; j++){
-    //            System.out.println(pt[j]);
-    //         }
-    //         System.out.println(" A");
-    //     } 
+
     private void ShowRecordNumber(){
         System.out.println("Number of records in each table:");
         String[] tableNames = {"user_category", "user", "car_category", "car", "copy", "produce", "rent" };

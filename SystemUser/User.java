@@ -1,3 +1,4 @@
+package SystemUser;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -8,13 +9,13 @@ import java.sql.Statement;
 import java.util.Scanner;
 import java.util.Set;
 
-public class User2 {
+public class User {
     private Set<String> ops = Set.of("1","2","3");
     private Connection con;
     //private Scanner input_scanner = new Scanner(System.in);  
     public Scanner input_scanner = new Scanner(System.in);  
     private String operation; 
-    public User2(Connection connection){
+    public User(Connection connection){
         con = connection;
     }
     

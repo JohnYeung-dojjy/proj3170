@@ -364,22 +364,30 @@ public class Admin {
             // System.out.println("Car Data size: "+carData.size());
             for (int i = 0; i < carData.size(); i++){
                 String[] pt = carData.get(i);
-                for(int j = 0; j < pt.length; j++){
-                    if (j == 0)
-                        callnum = pt[j];
-                    if (j == 1)
-                        numOfCopies = Integer.parseInt(pt[j]);
-                    if (j == 2)
-                        name = pt[j];
-                    if (j == 3)
-                        companyName = pt[j];
-                    if (j == 4)
-                        manufactureDate = pt[j];
-                    if (j == 5)
-                        time_rent = Integer.parseInt(pt[j]);
-                    if (j == 6)
-                        ccid = Integer.parseInt(pt[j]);
-                }
+                // for(int j = 0; j < pt.length; j++){
+                //     if (j == 0)
+                //         callnum = pt[j];
+                //     if (j == 1)
+                //         numOfCopies = Integer.parseInt(pt[j]);
+                //     if (j == 2)
+                //         name = pt[j];
+                //     if (j == 3)
+                //         companyName = pt[j];
+                //     if (j == 4)
+                //         manufactureDate = pt[j];
+                //     if (j == 5)
+                //         time_rent = Integer.parseInt(pt[j]);
+                //     if (j == 6)
+                //         ccid = Integer.parseInt(pt[j]);
+                // }
+                callnum         = pt[0];
+                numOfCopies     = Integer.parseInt(pt[1]);
+                name            = pt[2];
+                companyName     = pt[3];
+                manufactureDate = pt[4];
+                time_rent       = Integer.parseInt(pt[5]);
+                ccid            = Integer.parseInt(pt[6]);
+                
                 // System.out.println("-A-");
                 carPS.setString(1,callnum);
                 carPS.setString(2, name);

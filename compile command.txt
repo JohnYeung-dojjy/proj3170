@@ -1,3 +1,6 @@
 javac ./SystemUser/Admin.java ./SystemUser/User.java ./SystemUser/Manager.java Main.java
 
 java -cp .:mysql-connector-java-5.1.47.jar Main
+
+mysql --host=projgw --port=2633 -u Group12 -p
+love4ever<3

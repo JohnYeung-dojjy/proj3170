@@ -128,7 +128,7 @@ private void SearchForCarsCallnum() throws SQLException{
         String psqlSub ="SELECT car.callnum, COUNT(*)" +
         "FROM rent" +
         "LEFT JOIN car on rent.callnum = car.callnum" +
-        "WHERE rent.callnum = ? AND rent.return_date IS NULL" +
+        "WHERE rent.callnum = ? AND rent.return_date '0000-00-00'" +
         "GROUP BY car.callnum ORDER BY car.callnum;";
         PreparedStatement pstmtSub = con.prepareStatement(psqlSub);
         pstmtSub.setString(1, userinputnum);
@@ -202,7 +202,7 @@ private void SearchForCarsCallnum() throws SQLException{
                 String psqlSub = "SELECT rent.callnum, COUNT(*)" +
                 "FROM rent" +
                 "LEFT JOIN car on rent.callnum = car.callnum" +
-                "WHERE car.name LIKE ? AND rent.return_date IS NULL" +
+                "WHERE car.name LIKE ? AND rent.return_date = '0000-00-00'" +
                 "GROUP BY car.name ORDER BY car.callnum;" ;
                 
                 PreparedStatement pstmtSub = con.prepareStatement(psqlSub);
@@ -270,7 +270,7 @@ private void SearchForCarsCallnum() throws SQLException{
         "FROM rent" +
         "LEFT JOIN car on rent.callnum = car.callnum" +
         "LEFT JOIN produce ON rent.callnum = produce.callnum" +
-        "WHERE produce.cname LIKE ? AND rent.return_date IS NULL" + 
+        "WHERE produce.cname LIKE ? AND rent.return_date = '0000-00-00'" + 
         "GROUP BY rent.callnum ORDER BY rent.callnum;";
 
         PreparedStatement pstmtSub = con.prepareStatement(psqlSub);

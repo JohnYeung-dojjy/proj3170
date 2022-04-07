@@ -152,6 +152,9 @@ public class Admin {
         }
         catch (SQLException e){
             System.out.println(e);
+            System.out.println("Invalid operation! Exiting to main menu..."); 
+            System.out.println();   
+            return;
         }
         
     } 
@@ -179,6 +182,9 @@ public class Admin {
         }
         catch (SQLException e){
             System.out.println(e);
+            System.out.println("Invalid operation! Exiting to main menu...");
+            System.out.println();   
+            return;
         } 
         
         
@@ -205,7 +211,7 @@ public class Admin {
                 
                 if(filesList == null){
                     System.out.println("Invalid path! Exiting operation...");
-                    pathReader.close();
+                    // pathReader.close();
                     return;
                 }
             
@@ -331,6 +337,9 @@ public class Admin {
                 catch (Exception e) {
                     System.out.println("An error occurred.");
                     e.printStackTrace();
+                    System.out.println("Invalid operation! Exiting to main menu...");
+                    System.out.println();   
+                    return;
                 }
                 
             }
@@ -416,6 +425,9 @@ public class Admin {
         catch (Exception e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+            System.out.println("Invalid operation! Exiting to main menu...");
+            System.out.println();   
+            return;
         }
             // Statement stmt=con.createStatement();
             // stmt.executeUpdate ( "insert into "+ path +" values (  )" );
@@ -478,54 +490,12 @@ public class Admin {
         
         catch (SQLException e){
             System.out.println(e);
+            System.out.println("Invalid operation! Exiting to main menu...");
+            System.out.println();   
+            return;
         } 
         System.out.println();
     }
-
-    // see example at the bottom to loop over the returned ArrayList https://www.w3schools.com/java/java_arraylist.asp
-    // public ArrayList<String[]> readDataFile(String fileName) throws FileNotFoundException{
-        
-    //     File DataFile = new File(fileName+".txt");
-    //     Scanner fileReader = new Scanner(DataFile);
-    //     ArrayList<String[]> data = new ArrayList<String[]>();
-    //     while (fileReader.hasNextLine()) {
-    //         String fileData = fileReader.nextLine();
-    //         //System.out.println(data);
-    //         String[] lineItems = fileData.split("\t");
-    //         data.add(lineItems);
-    //     }
-    //     fileReader.close();
-
-    //     return data;
-        
-    // }
-
-    // public void loadUserCategory(ArrayList<String[]> data){
-    //     for (String[] item: data){
-    //         String ucid = item[0];
-    //         String max = item[1];
-    //         String period = item[2];
-    //         // insert to db
-    //     }
-    // }
-
-    // public void loadUser(ArrayList<String[]> data){
-        
-    // }
-
-    // public void loadCarCategory(ArrayList<String[]> data){
-        
-    // }
-
-    // public void loadRent(ArrayList<String[]> data){
-
-    // }
-
-    // public void loadCar(ArrayList<String[]> data){
-        
-    // }
-
-    
 
 }
 

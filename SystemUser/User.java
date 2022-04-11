@@ -126,17 +126,10 @@ public class User {
         pstmt.setString(1, userinputnum);
         ResultSet resultSet1 = pstmt.executeQuery();
 
-<<<<<<< HEAD
         String psqlSub ="SELECT car.callnum, COUNT(*) " +
         "FROM rent " +
         "LEFT JOIN car on rent.callnum = car.callnum " +
         "WHERE rent.callnum = ? AND rent.return_date=0000-00-00 " +
-=======
-        String psqlSub ="SELECT car.callnum, COUNT(*)" +
-        "FROM rent" +
-        "LEFT JOIN car on rent.callnum = car.callnum" +
-        "WHERE rent.callnum = ? AND rent.return_date '0000-00-00'" +
->>>>>>> 34ea6f0a9e474e2d63b2d3a75f9547a6a4be9ce7
         "GROUP BY car.callnum ORDER BY car.callnum;";
         PreparedStatement pstmtSub = con.prepareStatement(psqlSub);
         pstmtSub.setString(1, userinputnum);

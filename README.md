@@ -38,7 +38,7 @@ To start with, all the operations are performed by prepared statement as string 
 * Outputting an error message 
 
 Function deployment:
-All operations are completed by prepared statement and a successful message will be printed when the operation is completed. Like the renting operation, the return operation is also deployed by prepared statement while performing one more step in updating the return date by the current date. The manger can also list all un-returned car copies with checkout date by manger-inserted period that is performed through BETWEEN function in SQL. Error message will be return if the operation is failed in the manger function. For error handling, the output an information message in layman terms and in the next line of the result. There are 7 types of error message in total, covering different input and output error in operations.
+All operations are completed by prepared statement and a successful message will be printed when the operation is completed. Like the renting operation, the return operation is also deployed by prepared statement while performing one more step in updating the return date by the current date. The manger can also list all un-returned car copies with checkout date by manger-inserted period that is performed through BETWEEN function in SQL. Error message will be return if the operation is failed in the manger function. For error handling, the output an information message in layman terms and in the next line of the result. There are 7 types of error message in total, covering different input and output error in operations, including invalid input of operations and operations' error.
 
 Q&A
 Q: How should I do while choosing a wrong operator’s operation?

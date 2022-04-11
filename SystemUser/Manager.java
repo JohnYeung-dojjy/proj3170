@@ -22,7 +22,7 @@ public class Manager {
         con = connection;
     }
     public void operation(){
-    Boolean isUsing = true;
+        Boolean isUsing = true;
         while(isUsing){
             this.DisplayMenu();
             operation = this.input_scanner.nextLine();

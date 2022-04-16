@@ -251,7 +251,7 @@ public class Manager {
                 String callnum = rs.getString("callnum");
                 String copynum = rs.getString("copynum");
                 String checkout_date = rs.getString("checkout");
-                System.out.println("|"+uid+"|"+callnum+"|   "+copynum+"   |"+checkout_date);
+                System.out.println("|"+uid+"|"+callnum+"|   "+copynum+"   |"+checkout_date + "|");
                 
             }
             System.out.println("\nEnd of Query\n");

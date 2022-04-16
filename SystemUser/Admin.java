@@ -380,8 +380,7 @@ public class Admin {
                 manufactureDate = pt[4];
                 time_rent       = Integer.parseInt(pt[5]);
                 ccid            = Integer.parseInt(pt[6]);
-
-                // System.out.println("-A-");
+                
                 carPS.setString(1,callnum);
                 carPS.setString(2, name);
                 carPS.setDate(3, Date.valueOf(manufactureDate));
@@ -389,14 +388,17 @@ public class Admin {
                 carPS.setInt(5, ccid);
                 carPS.executeUpdate();
 
-                copyPS.setString(1, callnum);
-                copyPS.setInt(2, numOfCopies);
-                copyPS.executeUpdate();
+                // System.out.println("-A-");
+                for (int copyID=1; copyID<=numOfCopies; copyID++){
+                    copyPS.setString(1, callnum);
+                    copyPS.setInt(2, copyID);
+                    copyPS.executeUpdate();
+                }
                 
                 producePS.setString(1, companyName);
                 producePS.setString(2, callnum);
-                
                 producePS.executeUpdate();
+                    
 
             } 
             

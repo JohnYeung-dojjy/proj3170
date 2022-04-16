@@ -312,7 +312,7 @@ public class User {
     }
 
     private void ShowUserRentingRecords(){
-    System.out.println("Enter The cuser ID: ");
+    System.out.println("Enter The user ID: ");
     String userinputID = this.input_scanner.nextLine();
     System.out.println("");
     String sql = null;
@@ -336,7 +336,6 @@ public class User {
         PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.setString(1, userinputID);
         ResultSet resultSet = pstmt.executeQuery();
-        
         System.out.println("|CallNum |CopyNum|Name|Company |Check-out |Returned?|");
         while(resultSet.next()){
             System.out.print("|" + resultSet.getString(1));
@@ -344,13 +343,22 @@ public class User {
             System.out.print("   |" + resultSet.getString(3));
             System.out.print("|" + resultSet.getString(4));
             System.out.print("|" + resultSet.getString(5));
-            String dateOfReturn = resultSet.getString(6);
-            if (dateOfReturn != "0000-00-00"){
-                System.out.println("|" + "Yes" + "|");}
-            else {
-                System.out.println("|" + "No" + "|");}
+            
+            try{
+                String dateOfReturn = resultSet.getString(6);
+                // System.out.print(dateOfReturn);
+                // if (dateOfReturn != "0000-00-00"){
+                //     System.out.println("|" + "Yes" + "|");}
+                // else {
+                //     System.out.println("|" + "No" + "|");}
+                // }
+                System.out.println("|" + "Yes" + "|");
+            }catch(SQLException e){
+                System.out.println("|" + "No" + "|");
             }
-        System.out.println("End Of Query\n");
+        }
+            
+            System.out.println("End Of Query\n");
         } catch( SQLException e) {
             System.out.println("something went wrong: " + e.getMessage());
             System.out.println("Showing user renting record failed.\n");
